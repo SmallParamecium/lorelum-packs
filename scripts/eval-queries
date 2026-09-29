@@ -753,6 +753,9 @@ def main() -> int:
         violations = discipline_violations(active_queries, pack.get("practices", []))
         run["discipline"] = {"checked": True, "violations": len(violations)}
         if violations:
+            print(f"discipline: {len(violations)} query/practice restatement(s):")
+            for v in violations:
+                print(f"  - {v['query']} restates {short(v['practice'])} ({v['n']}-word run: \"{v['shared']}\")")
             detail = "; ".join(
                 f"{v['query']} restates {short(v['practice'])} ({v['n']}-word run: \"{v['shared']}\")"
                 for v in violations
@@ -771,7 +774,6 @@ def main() -> int:
         write_artifacts(run, args)
         return 1
 
-    print("discipline: no query restates an installed Practice's title or applies_when text") if args.check_discipline else None
     modes_section = {}
     for mode in requested:
         if mode == "semantic":
