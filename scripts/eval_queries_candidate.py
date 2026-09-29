@@ -192,7 +192,7 @@ def project_pack_details(lore: str, project_root: str, pack_name: str, store_roo
 
     runtime_practices = [
         _read_active_candidate_practice(lore, pid, pack_name, project_root, store_root)
-        for pid in sorted(active_ids or file_ids)
+        for pid in sorted(active_ids)
     ]
     return {
         "name": pack_name,
@@ -207,5 +207,3 @@ def project_pack_details(lore: str, project_root: str, pack_name: str, store_roo
             "practice_get_verified": len(runtime_practices),
         },
     }
-
-

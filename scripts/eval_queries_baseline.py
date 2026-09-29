@@ -128,5 +128,3 @@ def baseline_compatibility_errors(baseline: dict, pack_name: str, fixture_set: s
             if rank is not None and (not isinstance(rank, int) or isinstance(rank, bool) or rank < 1):
                 errors.append(f"baseline {mode} result {qid} has invalid hit_rank")
     return errors
-
-

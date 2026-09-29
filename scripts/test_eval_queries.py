@@ -36,6 +36,7 @@ if HERE not in sys.path:
 
 import eval_queries_baseline
 import eval_queries_candidate
+import eval_queries_gates
 import eval_queries_lore
 
 
@@ -186,6 +187,48 @@ class MainArgTests(unittest.TestCase):
                 MOD.main()
         self.assertEqual(cm.exception.code, 2)
 
+
+class RunPolicyTests(unittest.TestCase):
+    def _args(self, **changes):
+        defaults = {
+            "limit": None,
+            "min_top3": None,
+            "require_coverage": False,
+            "require_frozen": False,
+            "fail_on_baseline_regression": False,
+            "check_discipline": False,
+        }
+        defaults.update(changes)
+        return type("Args", (), defaults)
+
+    def test_explicit_min_top3_makes_a_complete_run_formal(self):
+        policy = eval_queries_gates.resolve_run_policy(
+            self._args(min_top3=0.75), {"min_top3": 0.90}
+        )
+        self.assertTrue(policy.formal)
+        self.assertEqual(policy.min_top3, 0.75)
+        self.assertEqual(policy.min_top3_source, "flag")
+
+    def test_fixture_min_top3_makes_a_complete_run_formal(self):
+        policy = eval_queries_gates.resolve_run_policy(
+            self._args(), {"min_top3": 0.90}
+        )
+        self.assertTrue(policy.formal)
+        self.assertEqual(policy.min_top3, 0.90)
+        self.assertEqual(policy.min_top3_source, "fixture")
+
+    def test_limit_disables_fixture_min_top3_and_formal_gates(self):
+        policy = eval_queries_gates.resolve_run_policy(
+            self._args(limit=1), {"min_top3": 0.90}
+        )
+        self.assertFalse(policy.formal)
+        self.assertIsNone(policy.min_top3)
+        self.assertEqual(policy.min_top3_source, "partial-run")
+
+    def test_discipline_is_partial_run_capable(self):
+        args = self._args(limit=1, check_discipline=True)
+        self.assertFalse(eval_queries_gates.limit_conflicts_with_formal_gates(args))
+        self.assertFalse(eval_queries_gates.resolve_run_policy(args, {"min_top3": 0.90}).formal)
 
 class MetricsTests(unittest.TestCase):
     def test_query_errors_count_as_misses_in_metric_denominator(self):
@@ -478,6 +521,48 @@ class BaselineRegressionTests(unittest.TestCase):
                                                        {"q1": {}})["unaccounted_baseline_queries"])
             self.assertEqual(self._run(proj, self._make_fixture(root), baseline, True), 1)
 
+
+class ReportCompatibilityTests(unittest.TestCase):
+    def test_renderer_accepts_legacy_baseline_schema_errors(self):
+        run = {
+            "fixture_set": "t",
+            "generated": "legacy",
+            "requested_modes": ["keyword"],
+            "top_k": 3,
+            "pack": {"name": "agentic-coding", "version": "0.6.0"},
+            "totals": {"runnable": 1, "skipped": 0, "retired": 0},
+            "modes": {"keyword": {
+                "state": "ok",
+                "metrics": {
+                    "positive": {"n": 1, "top1_rate": 1.0, "top3_rate": 1.0},
+                    "neighbor": {
+                        "n": 0,
+                        "expect_top1_rate": None,
+                        "expect_top3_rate": None,
+                        "trap_top1_rate": None,
+                        "confusion_matrix": {},
+                        "worst_confused_pairs": [],
+                    },
+                    "errored_queries": [],
+                    "worst_confused_pairs": [],
+                    "per_practice_positives": {},
+                },
+                "results": [],
+                "regression": {
+                    "common_queries": 0,
+                    "regressions": [],
+                    "improvements": [],
+                    "migrations": [],
+                    "migration_failures": [],
+                    "expect_mismatches": [],
+                    "baseline_schema_errors": [{"id": "old", "missing": ["hits"]}],
+                    "retired_queries": [],
+                    "unaccounted_baseline_queries": [],
+                },
+            }},
+        }
+        report = MOD.render_report(run)
+        self.assertIn("Retrieval evaluation: t", report)
 
 class MigrationPolicyTests(unittest.TestCase):
     def test_migrated_query_requires_independent_old_coverage_and_boundary(self):
