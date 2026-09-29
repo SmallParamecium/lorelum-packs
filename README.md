@@ -130,7 +130,7 @@ python scripts/eval-queries --project-root "$PROJECT_ROOT" \
   --fail-on-baseline-regression
 ```
 
-`--project-root` and `--ensure-install` are mutually exclusive. The workflow also runs the evaluator unit tests before retrieval. Candidate mode reads the Pack version from `$PROJECT_ROOT/.lorelum/packs/agentic-coding/pack.yaml`, validates the candidate Pack, requires a ready ProjectContext with `base: none`, checks the active Practice set, and reads each active Practice through `lore get --json` before running keyword queries against the same ProjectContext. JSON and Markdown evidence are uploaded when produced; bootstrap or candidate-validation failures may occur before the evaluator can create artifacts. Scope, gate decisions, and deferred Query/body checks are recorded in [Issue #26 design decisions](issue-26-query-source-decision.md).
+`--project-root` and `--ensure-install` are mutually exclusive. The workflow also runs the evaluator unit tests before retrieval. Candidate mode reads the Pack version from `$PROJECT_ROOT/.lorelum/packs/agentic-coding/pack.yaml`, validates the candidate Pack, requires a ready ProjectContext with `base: none`, checks the active Practice set, and reads each active Practice through `lore get --json` before running keyword queries against the same ProjectContext. JSON and Markdown evidence are uploaded when produced; bootstrap or candidate-validation failures may occur before the evaluator can create artifacts. Scope, gate decisions, and deferred Query/body checks are recorded in [Issue #26 design decisions](docs/issue-26-query-source-decision.md).
 
 ### Decision probes (lightweight behavior check)
 

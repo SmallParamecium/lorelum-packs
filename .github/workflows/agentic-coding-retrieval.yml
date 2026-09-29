@@ -19,6 +19,8 @@ jobs:
 
     env:
       LORE_VERSION: "0.1.0-alpha.3"
+      LORE_INSTALL_REF: "3c1d7512e280e3b443dd412b820dff4bd0ff4998"
+      LORE_INSTALL_SHA256: "c90b84ccbec2c15b68317c1ee25d579983a6759ecabe004a438f6ffd3ec35f9f"
       BASELINE: fixtures/agentic-coding/baselines/agentic-coding-0.5.1-keyword-2026-09-28.json
 
     steps:
@@ -38,8 +40,11 @@ jobs:
 
       - name: Install pinned lore CLI
         run: |
-          curl -fsSL https://raw.githubusercontent.com/lorelum/lorelum/main/install.sh \
-            | sh -s -- --version "$LORE_VERSION"
+          install_script="$RUNNER_TEMP/lore-install.sh"
+          curl -fsSL "https://raw.githubusercontent.com/lorelum/lorelum/$LORE_INSTALL_REF/install.sh" \
+            -o "$install_script"
+          echo "$LORE_INSTALL_SHA256  $install_script" | sha256sum -c -
+          sh "$install_script" --version "$LORE_VERSION"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Prepare candidate ProjectContext
