@@ -34,6 +34,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
+import eval_queries_baseline
 import eval_queries_candidate
 import eval_queries_lore
 
@@ -473,7 +474,7 @@ class BaselineRegressionTests(unittest.TestCase):
             removed = dict(data["modes"]["keyword"]["results"][0], id="old", error="boom")
             data["modes"]["keyword"]["results"].append(removed)
             _write(baseline, json.dumps(data))
-            self.assertIn("old", MOD.compare_baseline([], data["modes"]["keyword"]["results"], 3,
+            self.assertIn("old", eval_queries_baseline.compare_baseline([], data["modes"]["keyword"]["results"], 3,
                                                        {"q1": {}})["unaccounted_baseline_queries"])
             self.assertEqual(self._run(proj, self._make_fixture(root), baseline, True), 1)
 
@@ -560,24 +561,31 @@ class MigrationPolicyTests(unittest.TestCase):
         fixture = {"q": {"id": "q", "expect": "new", "previous_expect": "old", "migration_kind": "reassign"}}
         current = [{"id": "q", "expect": "new", "text": "same", "hit_rank": 1, "hits": ["new"], "error": None}]
         baseline = [{"id": "q", "expect": "old", "text": "same", "hit_rank": 1, "hits": ["old"], "error": None}]
-        result = MOD.compare_baseline(current, baseline, 3, fixture)
+        result = eval_queries_baseline.compare_baseline(current, baseline, 3, fixture)
         self.assertEqual(len(result["migrations"]), 1); self.assertEqual(result["migration_failures"], [])
 
     def test_baseline_requires_query_text(self):
-        current = [{"id": "q", "expect": "old", "text": "same", "hit_rank": 1, "hits": ["old"], "error": None}]
-        baseline = [{"id": "q", "expect": "old", "hit_rank": 1, "hits": ["old"], "error": None}]
-        result = MOD.compare_baseline(current, baseline, 3, {"q": {}})
-        self.assertEqual(result["baseline_schema_errors"][0]["missing"], ["text"])
+        baseline = {
+            "pack": {"name": "agentic-coding"},
+            "fixture_set": "t",
+            "top_k": 3,
+            "totals": {"runnable": 1},
+            "modes": {"keyword": {"results": [{
+                "id": "q", "expect": "old", "hit_rank": 1, "hits": ["old"], "error": None
+            }]}},
+        }
+        errors = eval_queries_baseline.baseline_compatibility_errors(baseline, "agentic-coding", "t", 3, ["keyword"])
+        self.assertTrue(any("missing text" in error for error in errors))
 
     def test_baseline_rejects_unrecorded_expect_change(self):
         current = [{"id": "q", "expect": "new", "text": "same", "hit_rank": 1, "hits": ["new"], "error": None}]
         baseline = [{"id": "q", "expect": "old", "text": "same", "hit_rank": 1, "hits": ["old"], "error": None}]
-        self.assertEqual(len(MOD.compare_baseline(current, baseline, 3, {"q": {}})["expect_mismatches"]), 1)
+        self.assertEqual(len(eval_queries_baseline.compare_baseline(current, baseline, 3, {"q": {}})["expect_mismatches"]), 1)
 
     def test_baseline_rejects_query_text_change_under_same_id(self):
         current = [{"id": "q", "expect": "old", "text": "new wording", "hit_rank": 1, "hits": ["old"], "error": None}]
         baseline = [{"id": "q", "expect": "old", "text": "old wording", "hit_rank": 1, "hits": ["old"], "error": None}]
-        result = MOD.compare_baseline(current, baseline, 3, {"q": {}})
+        result = eval_queries_baseline.compare_baseline(current, baseline, 3, {"q": {}})
         self.assertIn("retire the old Query", result["expect_mismatches"][0]["reason"])
 
     def test_fixture_requires_migration_query_ids(self):

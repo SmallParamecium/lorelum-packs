@@ -5,16 +5,9 @@ from __future__ import annotations
 
 
 
-def compare_baseline(current: list, baseline_results: list, top_k: int, fixture_queries: dict | None = None) -> dict:
-    required_fields = ("id", "expect", "text", "hit_rank", "error")
-    baseline_schema_errors = []
-    for row in baseline_results:
-        missing = [field for field in required_fields if field not in row or (field == "text" and not row.get(field))]
-        if missing:
-            baseline_schema_errors.append({"id": row.get("id", "(missing id)"), "missing": missing})
+def compare_baseline(current: list, baseline_results: list, top_k: int, fixture_queries: dict) -> dict:
     baseline_ids = {r["id"] for r in baseline_results if r.get("id")}
     base = {r["id"]: r for r in baseline_results if not r.get("error") and r.get("id")}
-    fixture_queries = fixture_queries or {}
     regressions, improvements = [], []
     migrations, migration_failures, mismatches = [], [], []
     common = 0
@@ -60,7 +53,7 @@ def compare_baseline(current: list, baseline_results: list, top_k: int, fixture_
         was_hit = b.get("hit_rank") is not None and b["hit_rank"] <= top_k
         now_hit = r["hit_rank"] is not None and r["hit_rank"] <= top_k
         if was_hit and not now_hit:
-            regressions.append({"id": r["id"], "baseline_rank": b["hit_rank"], "now": r["hits"][:3]})
+            regressions.append({"id": r["id"], "baseline_rank": b["hit_rank"], "now": r["hits"][:top_k]})
         elif now_hit and not was_hit:
             improvements.append({"id": r["id"], "now_rank": r["hit_rank"]})
     retired_ids = {
@@ -75,7 +68,6 @@ def compare_baseline(current: list, baseline_results: list, top_k: int, fixture_
         "migrations": migrations,
         "migration_failures": migration_failures,
         "expect_mismatches": mismatches,
-        "baseline_schema_errors": baseline_schema_errors,
         "retired_queries": sorted(set(base) & retired_ids),
         "unaccounted_baseline_queries": baseline_only,
     }
