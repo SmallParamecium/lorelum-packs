@@ -78,13 +78,13 @@ Custom registries must expose `.lorelum/registry.yaml` from a supported public G
 
 ## Evaluation fixtures and scripts
 
-`fixtures/<pack>/` holds `evaluation_only` hypotheses, never runtime input: `practice-catalog.yaml` (per-Practice retrieval and behavior contrasts) and `workflows.yaml` (cross-Practice scenarios). `fixtures/agentic-coding/queries.yaml` additionally holds a retrieval query set — 3 positive and 2 neighbor queries per Practice, worded to avoid restating Practice text — whose expected selections are declared before any run. `fixtures/agentic-coding/baselines/` stores recorded runs. Fixtures state hypotheses, not proof of retrieval or downstream quality.
+`fixtures/<pack>/` holds `evaluation_only` hypotheses, never runtime input: `practice-catalog.yaml` (per-Practice retrieval and behavior contrasts) and `workflows.yaml` (cross-Practice scenarios). `fixtures/agentic-coding/queries.yaml` additionally holds a retrieval query set — at least 1 positive query per active Practice (currently 106 positive and 70 neighbor queries), written as situations (automatic restatement checks cover only titles and `applies_when`) — whose expected selections are declared before any run. Query entries use `status: frozen` for formal CI; over-broad historical entries may be `status: retired` with replacement references, and explicit Practice migrations record the previous target and reason. `fixtures/agentic-coding/baselines/` stores recorded runs. Fixtures state hypotheses, not proof of retrieval or downstream quality.
 
-`scripts/eval-queries` evaluates a query set against an installed Pack by looping the public `lore` CLI (Python 3.9+ with PyYAML; no CLI changes). It supports `--mode keyword|semantic|both`; when the semantic index cannot build on a machine (for example the known `embedding.deadline-exceeded` on some Windows x64 hosts), the run is marked degraded with the failure code instead of failing. It reports per-query hits, positive top-k hit rates, the neighbor confusion matrix, and `--baseline` regression diffs.
+`scripts/eval-queries` evaluates a query set against a Pack by looping the public `lore` CLI (Python 3.9+ with PyYAML; no CLI changes). It supports `--mode keyword|semantic|both`; when the semantic index cannot build on a machine (for example the known `embedding.deadline-exceeded` on some Windows x64 hosts), the run is marked degraded with the failure code instead of failing. It reports per-query hits, positive top-k hit rates, the neighbor confusion matrix, and `--baseline` regression diffs. `--project-root <dir>` switches to candidate mode and evaluates the Pack under `<dir>/.lorelum/packs/agentic-coding` via ProjectContext instead of an installed release; `--fail-on-baseline-regression` makes any lost hit exit non-zero. Any gate failure still writes the `--out` JSON and `--report` Markdown artifacts with a `gate_failures` section.
 
 ```sh
 # Isolated-store run against a registry release, writing a JSON artifact and Markdown report.
-python scripts/eval-queries --mode both --ensure-install agentic-coding@0.5.0 \
+python scripts/eval-queries --mode both --ensure-install agentic-coding@0.5.1 \
   --store-root tmp/eval-store --out run.json --report run.md
 
 # Compare a later run (for example a rewritten Practice set) against a recorded baseline.
@@ -93,7 +93,8 @@ python scripts/eval-queries --mode keyword --baseline fixtures/agentic-coding/ba
 # Promotion gate for a future release: every installed Practice must have fixture queries,
 # and the positive top-3 hit rate must clear the team's bar. Exits non-zero otherwise.
 python scripts/eval-queries --mode keyword --require-coverage --min-top3 0.90 \
-  --ensure-install agentic-coding@0.5.0 --store-root tmp/eval-store \
+  --require-frozen \
+  --ensure-install agentic-coding@0.5.1 --store-root tmp/eval-store \
   --baseline fixtures/agentic-coding/baselines/<previous-release>.json
 ```
 
@@ -101,19 +102,35 @@ python scripts/eval-queries --mode keyword --require-coverage --min-top3 0.90 \
 
 The query set is a maintained fixture, not a generated one: it grows with the catalog through the promotion flow, and the gates make skipping a step visible.
 
-- **A change that adds a Practice adds its queries in the same change**: 3 positive + 2 neighbor queries in `fixtures/agentic-coding/queries.yaml`. Neighbor expectations follow the practice-catalog `nearest_neighbor` map — update the catalog first if the new Practice changes which neighbor is nearest for an existing one. `--require-coverage` fails any run against a Pack containing a Practice with no positive queries.
+- **A change that adds a Practice adds its queries in the same change**: at least 1 positive query in `fixtures/agentic-coding/queries.yaml`. Add neighbor queries for the boundary distinctions the change depends on, and keep neighbor expectations aligned with the practice-catalog `nearest_neighbor` map — update the catalog first if the new Practice changes which neighbor is nearest for an existing one. `--require-coverage` fails any run against a Pack containing a Practice with no positive queries.
 - **Queries must be written in situation wording, not the Practice's own words.** Check every change with `python scripts/eval-queries --check-discipline --mode keyword --limit 1` — it fails on any 4+-word run shared with an installed Practice's title or `applies_when`, because such a query matches the keyword index by quotation and proves nothing about retrieval.
-- **When Practices merge or are removed, migrate the affected queries' `expect` to the successor Practice ID** and re-run; per issue #17, an old query should hit its successor.
-- **The team gate is recorded in the fixture** (`min_top3`); every run enforces it by default. `--min-top3 <rate>` overrides it for a single run, and a degraded semantic mode is reported as not evaluated rather than silently passing.
+- **When Practices are refined, merged, or removed, record an explicit Query migration.** A migration must list its affected `query_ids`; each linked Query must either declare `previous_expect` or be retired. A migrated Query no longer counts as coverage for its previous Practice. If that Practice remains active, add an independent positive and an old-vs-new neighbor Query; if it is retired, record the Practice migration instead of inventing coverage. Over-broad Queries are split into new IDs or retired rather than using multi-valid expectations.
+- **The team gate is recorded in the fixture** (`min_top3`); every complete run enforces it by default. CI additionally pins `--min-top3 0.90` so removing the fixture field cannot silently disable the gate. An exploratory `--limit N` run never evaluates or passes the Top-3 gate, even when the fixture defines a minimum; it cannot be combined with `--require-coverage`, `--require-frozen`, `--fail-on-baseline-regression`, or an explicit `--min-top3`. Formal gates require explicit `status: frozen` for every active Query, fail on missing targets and Query execution errors, and count errors as misses in the Top-3 denominator. A degraded semantic mode is reported as not evaluated rather than silently passing.
+- **Baseline regression gates require compatible evidence**: `--fail-on-baseline-regression` requires `--baseline` with the same Pack, fixture set and Top-k, and complete, valid results for each requested mode (result count must match `totals.runnable`; partial runs are rejected). Deleting an old Query ID requires a retained `status: retired` entry with a reason; changing its text requires retirement and a new ID. Practice migration records must link Queries that actually belonged to the old Practice.
 
 ```sh
 # Preflight for a change that touches Practices or queries.
 python scripts/eval-queries --mode keyword --require-coverage --check-discipline \
-  --ensure-install agentic-coding@0.5.0 --store-root tmp/eval-store \
+  --require-frozen \
+  --ensure-install agentic-coding@0.5.1 --store-root tmp/eval-store \
   --baseline fixtures/agentic-coding/baselines/<previous-release>.json
 ```
 
 Existing queries double as canaries: re-running them against a new release with `--baseline` reports whether newly added Practices steal hits meant for existing ones.
+
+### Candidate mode and CI gate
+
+The PR workflow `.github/workflows/agentic-coding-retrieval.yml` runs when `packs/agentic-coding/**`, `fixtures/agentic-coding/**`, `scripts/eval-queries`, or the workflow itself changes. It builds a temporary ProjectContext from the PR's `packs/agentic-coding`, then runs the keyword gate in candidate mode:
+
+```sh
+python scripts/eval-queries --project-root "$PROJECT_ROOT" \
+  --fixtures fixtures/agentic-coding/queries.yaml --mode keyword \
+  --min-top3 0.90 --require-coverage --require-frozen --check-discipline \
+  --baseline fixtures/agentic-coding/baselines/agentic-coding-0.5.1-keyword-2026-09-28.json \
+  --fail-on-baseline-regression
+```
+
+`--project-root` and `--ensure-install` are mutually exclusive. The workflow also runs the evaluator unit tests before retrieval. Candidate mode reads the Pack version from `$PROJECT_ROOT/.lorelum/packs/agentic-coding/pack.yaml`, validates the candidate Pack, requires a ready ProjectContext with `base: none`, checks the active Practice set, and reads each active Practice through `lore get --json` before running keyword queries against the same ProjectContext. JSON and Markdown evidence are uploaded when produced; bootstrap or candidate-validation failures may occur before the evaluator can create artifacts. Scope, gate decisions, and deferred Query/body checks are recorded in [Issue #26 design decisions](issue-26-query-source-decision.md).
 
 ### Decision probes (lightweight behavior check)
 

@@ -1,0 +1,3383 @@
+{
+ "schema": "eval-queries-run/1",
+ "note": "Evaluation-only evidence: observed retrieval selection for the fixture queries on one machine and one Pack revision. It is not a claim about content quality, other queries, other modes that were unavailable, or downstream Agent behavior.",
+ "generated": "2026-09-28T08:08:27+00:00",
+ "fixture_set": "agentic-coding-queries",
+ "fixtures_path": "fixtures\\agentic-coding\\queries.yaml",
+ "pack": {
+  "name": "agentic-coding",
+  "version": "0.5.1",
+  "practice_count": 34
+ },
+ "source_kind": "store",
+ "candidate_checks": null,
+ "project_root": null,
+ "pack_root": null,
+ "lore_version": "0.1.0-alpha.3",
+ "store_root": "tmp\\issue26-release-store",
+ "requested_modes": [
+  "keyword"
+ ],
+ "top_k": 3,
+ "fetch_k": 5,
+ "limit": null,
+ "partial_run": false,
+ "totals": {
+  "runnable": 176,
+  "skipped": 0,
+  "retired": 0
+ },
+ "skipped": [],
+ "retired": [],
+ "coverage": {
+  "practices_installed": 34,
+  "practices_with_positive_queries": 34,
+  "uncovered": []
+ },
+ "discipline": {
+  "checked": true,
+  "violations": 0
+ },
+ "min_top3": {
+  "value": 0.9,
+  "source": "fixture"
+ },
+ "modes": {
+  "keyword": {
+   "state": "ok",
+   "metrics": {
+    "positive": {
+     "n": 106,
+     "top1_rate": 0.934,
+     "top3_rate": 0.9906
+    },
+    "neighbor": {
+     "n": 70,
+     "expect_top1_rate": 0.5857,
+     "expect_top3_rate": 0.8857,
+     "trap_top1_rate": 0.2
+    },
+    "confusion_matrix": {
+     "agentic-coding.requirements.ground-user-goal": {
+      "agentic-coding.requirements.ground-user-goal": 1,
+      "agentic-coding.requirements.define-acceptance-and-non-goals": 1
+     },
+     "agentic-coding.requirements.resolve-source-authority": {
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability": 2
+     },
+     "agentic-coding.requirements.define-acceptance-and-non-goals": {
+      "agentic-coding.requirements.define-acceptance-and-non-goals": 1,
+      "agentic-coding.planning.derive-committed-set-from-concerns": 1
+     },
+     "agentic-coding.planning.decide-scope-and-stop-conditions": {
+      "agentic-coding.implementation.confirm-product-surface-expansion": 2,
+      "agentic-coding.planning.decide-scope-and-stop-conditions": 1,
+      "agentic-coding.implementation.replan-on-material-drift": 1
+     },
+     "agentic-coding.planning.scale-work-to-risk-and-cost": {
+      "agentic-coding.implementation.replan-on-material-drift": 2
+     },
+     "agentic-coding.planning.map-plan-to-user-capability": {
+      "agentic-coding.verification.map-evidence-to-acceptance": 2
+     },
+     "agentic-coding.planning.plan-sufficient-evidence": {
+      "agentic-coding.requirements.define-acceptance-and-non-goals": 1,
+      "agentic-coding.verification.map-evidence-to-acceptance": 1
+     },
+     "agentic-coding.planning.derive-committed-set-from-concerns": {
+      "agentic-coding.planning.decide-scope-and-stop-conditions": 2
+     },
+     "agentic-coding.planning.keep-acceptance-path-completable": {
+      "agentic-coding.implementation.validate-at-the-owning-boundary": 1,
+      "agentic-coding.implementation.preserve-responsibility-boundaries": 1
+     },
+     "agentic-coding.implementation.inspect-and-reuse-existing-capability": {
+      "agentic-coding.implementation.choose-smallest-sufficient-design": 2
+     },
+     "agentic-coding.implementation.limit-investigation-to-current-decision": {
+      "agentic-coding.implementation.limit-investigation-to-current-decision": 1,
+      "agentic-coding.implementation.validate-at-the-owning-boundary": 1
+     },
+     "agentic-coding.implementation.surface-unconfirmed-assumptions": {
+      "agentic-coding.implementation.surface-unconfirmed-assumptions": 1,
+      "agentic-coding.review.run-subtractive-review-before-commit": 1
+     },
+     "agentic-coding.implementation.confirm-product-surface-expansion": {
+      "agentic-coding.implementation.replan-on-material-drift": 1,
+      "agentic-coding.planning.derive-committed-set-from-concerns": 1
+     },
+     "agentic-coding.implementation.choose-smallest-sufficient-design": {
+      "agentic-coding.review.run-subtractive-review-before-commit": 2
+     },
+     "agentic-coding.implementation.validate-at-the-owning-boundary": {
+      "agentic-coding.implementation.make-recovery-behavior-explicit": 2
+     },
+     "agentic-coding.implementation.make-recovery-behavior-explicit": {
+      "agentic-coding.implementation.validate-at-the-owning-boundary": 2
+     },
+     "agentic-coding.implementation.preserve-responsibility-boundaries": {
+      "agentic-coding.implementation.preserve-responsibility-boundaries": 1,
+      "agentic-coding.implementation.choose-smallest-sufficient-design": 1
+     },
+     "agentic-coding.implementation.replan-on-material-drift": {
+      "agentic-coding.planning.scale-work-to-risk-and-cost": 2
+     },
+     "agentic-coding.testing.anchor-tests-to-requirements": {
+      "agentic-coding.testing.justify-regression-protection": 1,
+      "agentic-coding.implementation.confirm-product-surface-expansion": 1
+     },
+     "agentic-coding.testing.assert-observable-behavior": {
+      "agentic-coding.testing.anchor-tests-to-requirements": 2
+     },
+     "agentic-coding.testing.classify-failure-before-changing-test": {
+      "agentic-coding.testing.classify-failure-before-changing-test": 1,
+      "agentic-coding.correction.restore-authoritative-baseline": 1
+     },
+     "agentic-coding.testing.justify-regression-protection": {
+      "agentic-coding.testing.justify-regression-protection": 2
+     },
+     "agentic-coding.verification.map-evidence-to-acceptance": {
+      "agentic-coding.verification.close-or-declare-evidence-gaps": 1,
+      "agentic-coding.verification.map-evidence-to-acceptance": 1
+     },
+     "agentic-coding.verification.bind-evidence-to-artifact-state": {
+      "agentic-coding.review.validate-findings-before-action": 1,
+      "agentic-coding.recovery.validate-handoff-before-continuation": 1
+     },
+     "agentic-coding.verification.close-or-declare-evidence-gaps": {
+      "agentic-coding.verification.close-or-declare-evidence-gaps": 1,
+      "agentic-coding.delivery.claim-only-supported-outcome": 1
+     },
+     "agentic-coding.review.validate-findings-before-action": {
+      "agentic-coding.recovery.validate-handoff-before-continuation": 1,
+      "agentic-coding.review.run-subtractive-review-before-commit": 1
+     },
+     "agentic-coding.review.run-subtractive-review-before-commit": {
+      "agentic-coding.review.validate-findings-before-action": 2
+     },
+     "agentic-coding.delivery.claim-only-supported-outcome": {
+      "agentic-coding.verification.close-or-declare-evidence-gaps": 2
+     },
+     "agentic-coding.delivery.report-material-residuals": {
+      "agentic-coding.delivery.report-material-residuals": 1,
+      "agentic-coding.verification.map-evidence-to-acceptance": 1
+     },
+     "agentic-coding.correction.restore-authoritative-baseline": {
+      "agentic-coding.requirements.resolve-source-authority": 1,
+      "agentic-coding.recovery.reground-after-context-loss": 1
+     },
+     "agentic-coding.context.give-delegated-agents-decision-context": {
+      "agentic-coding.recovery.validate-handoff-before-continuation": 2
+     },
+     "agentic-coding.context.write-decision-dense-checkpoint": {
+      "agentic-coding.context.write-decision-dense-checkpoint": 1,
+      "agentic-coding.recovery.reground-after-context-loss": 1
+     },
+     "agentic-coding.recovery.reground-after-context-loss": {
+      "agentic-coding.implementation.preserve-responsibility-boundaries": 1,
+      "agentic-coding.context.write-decision-dense-checkpoint": 1
+     },
+     "agentic-coding.recovery.validate-handoff-before-continuation": {
+      "agentic-coding.correction.restore-authoritative-baseline": 1,
+      "agentic-coding.recovery.validate-handoff-before-continuation": 1
+     }
+    },
+    "worst_confused_pairs": [
+     {
+      "resembles": "agentic-coding.testing.justify-regression-protection",
+      "actual_top1": "agentic-coding.testing.justify-regression-protection",
+      "count": 2
+     },
+     {
+      "resembles": "agentic-coding.requirements.ground-user-goal",
+      "actual_top1": "agentic-coding.requirements.ground-user-goal",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "actual_top1": "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "actual_top1": "agentic-coding.planning.derive-committed-set-from-concerns",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.planning.plan-sufficient-evidence",
+      "actual_top1": "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "actual_top1": "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.planning.keep-acceptance-path-completable",
+      "actual_top1": "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "actual_top1": "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "actual_top1": "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "count": 1
+     },
+     {
+      "resembles": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "actual_top1": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "count": 1
+     }
+    ],
+    "per_practice_positives": {
+     "agentic-coding.requirements.ground-user-goal": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.requirements.resolve-source-authority": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.requirements.define-acceptance-and-non-goals": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.planning.decide-scope-and-stop-conditions": {
+      "hit_ranks": [
+       1,
+       1,
+       3,
+       1,
+       2,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.planning.scale-work-to-risk-and-cost": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.planning.map-plan-to-user-capability": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.planning.plan-sufficient-evidence": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.planning.derive-committed-set-from-concerns": {
+      "hit_ranks": [
+       1,
+       2,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.planning.keep-acceptance-path-completable": {
+      "hit_ranks": [
+       1,
+       3,
+       2
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.inspect-and-reuse-existing-capability": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.limit-investigation-to-current-decision": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.surface-unconfirmed-assumptions": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.confirm-product-surface-expansion": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.choose-smallest-sufficient-design": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.validate-at-the-owning-boundary": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.make-recovery-behavior-explicit": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.preserve-responsibility-boundaries": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.implementation.replan-on-material-drift": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.testing.anchor-tests-to-requirements": {
+      "hit_ranks": [
+       1,
+       1,
+       4
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.testing.assert-observable-behavior": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.testing.classify-failure-before-changing-test": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.testing.justify-regression-protection": {
+      "hit_ranks": [
+       1,
+       1,
+       2
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.verification.map-evidence-to-acceptance": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.verification.bind-evidence-to-artifact-state": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.verification.close-or-declare-evidence-gaps": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.review.validate-findings-before-action": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.review.run-subtractive-review-before-commit": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.delivery.claim-only-supported-outcome": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.delivery.report-material-residuals": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.correction.restore-authoritative-baseline": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.context.give-delegated-agents-decision-context": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.context.write-decision-dense-checkpoint": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.recovery.reground-after-context-loss": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     },
+     "agentic-coding.recovery.validate-handoff-before-continuation": {
+      "hit_ranks": [
+       1,
+       1,
+       1
+      ],
+      "top1": true,
+      "topk": true
+     }
+    },
+    "errored_queries": []
+   },
+   "results": [
+    {
+     "id": "requirements.ground-user-goal.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.ground-user-goal",
+     "resembles": null,
+     "text": "the ticket says fix the broken upload flow and I have already picked the error-banner component to rework, but nobody wrote down what people should be able to do after the fix",
+     "hits": [
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.ground-user-goal.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.ground-user-goal",
+     "resembles": null,
+     "text": "support wants to look up delayed orders by the reference number customers read out loud, and the current plan just adds a small badge to the operations screen",
+     "hits": [
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.implementation.make-recovery-behavior-explicit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.ground-user-goal.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.ground-user-goal",
+     "resembles": null,
+     "text": "before I start coding, how do I decide whether the thing I am building is what the requester actually needs rather than the easiest nearby change",
+     "hits": [
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.ground-user-goal.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "resembles": "agentic-coding.requirements.ground-user-goal",
+     "text": "we agree creators must be able to retry one failed file without re-uploading the ones that succeeded; what is missing is a list of which checks must pass before I call the task done",
+     "hits": [
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.requirements.define-acceptance-and-non-goals"
+     ],
+     "hit_rank": 5,
+     "error": null
+    },
+    {
+     "id": "requirements.ground-user-goal.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "resembles": "agentic-coding.requirements.ground-user-goal",
+     "text": "the outcome sentence is agreed; now I need to write down the required behaviors and explicitly park mirror support and caching ideas outside the task",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.requirements.ground-user-goal"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.resolve-source-authority.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.resolve-source-authority",
+     "resembles": null,
+     "text": "the adopted spec keeps order records for seven years but an older cleanup job and its passing tests delete them after one, and I need to know which one wins",
+     "hits": [
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.review.validate-findings-before-action"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.resolve-source-authority.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.resolve-source-authority",
+     "resembles": null,
+     "text": "the migration plan says preserve customer identifiers while the current prototype and its README generate replacements, and I must pick which document to follow",
+     "hits": [
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.resolve-source-authority.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.resolve-source-authority",
+     "resembles": null,
+     "text": "the suite asserts one behavior, the decision record says another, and a maintainer comment disagrees with both; how do I determine what is actually intended",
+     "hits": [
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.resolve-source-authority.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": "agentic-coding.requirements.resolve-source-authority",
+     "text": "request, specification, and suite all agree on the behavior; my only open question is whether the scheduling package already ships a tested function for the booking-overlap rule",
+     "hits": [
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.resolve-source-authority.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": "agentic-coding.requirements.resolve-source-authority",
+     "text": "the documents agree on what to build; before writing a new link cleaner I should check whether the importer's existing dependency already handles encoded paths and host casing",
+     "hits": [
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.define-acceptance-and-non-goals.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "resembles": null,
+     "text": "the installer must keep working against the official registry and one named repository, but nobody has listed which behaviors are required before planning starts",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.planning.plan-sufficient-evidence"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.define-acceptance-and-non-goals.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "resembles": null,
+     "text": "I am tempted to add mirrors, caching, and a plug-in system while building the new loader; how do I keep those out of the committed work",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.define-acceptance-and-non-goals.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "resembles": null,
+     "text": "what must work when this task is finished, and which tempting adjacent features should be named as clearly outside it",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "requirements.define-acceptance-and-non-goals.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.requirements.ground-user-goal",
+     "resembles": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "text": "nobody can say yet whether install should target the official registry, a custom repository, or both, so there is no agreed outcome to derive checks from",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.validate-at-the-owning-boundary"
+     ],
+     "hit_rank": null,
+     "error": null
+    },
+    {
+     "id": "requirements.define-acceptance-and-non-goals.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.requirements.ground-user-goal",
+     "resembles": "agentic-coding.requirements.define-acceptance-and-non-goals",
+     "text": "the team keeps proposing polish around the request, but we still have not written one sentence about what the affected people need to be able to do afterward",
+     "hits": [
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.correction.restore-authoritative-baseline"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "planning.admit-only-currently-justified-work.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "the alert only needs email delivery, but the plan now lists SMS and push adapters because the interface looks easy to generalize",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.admit-only-currently-justified-work.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "how do I stop nice-to-have refactors and future-proofing hooks from sneaking into the committed plan for a small registry addition",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.derive-committed-set-from-concerns"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.admit-only-currently-justified-work.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "a teammate wants to promote the file-locator abstraction from maybe-later to required work because it might help in six months",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "planning.admit-only-currently-justified-work.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "resembles": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "text": "the two display modes are approved, and I notice the component could trivially start accepting arbitrary spacing tokens that nobody asked for",
+     "hits": [
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.admit-only-currently-justified-work.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "resembles": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "text": "one order-shipped event got the green light, and the dispatcher sketch would let partners subscribe to any event name with custom headers",
+     "hits": [
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.requirements.resolve-source-authority"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.scale-work-to-risk-and-cost.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "resembles": null,
+     "text": "the webhook signature change could break every receiver in production; what depth of checking, staged rollout, and undo route does that deserve compared to a reversible color tweak",
+     "hits": [
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.context.give-delegated-agents-decision-context"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.scale-work-to-risk-and-cost.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "resembles": null,
+     "text": "I am about to reuse the same light one-test pass for a live schema migration that I used for the button color fix",
+     "hits": [
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.scale-work-to-risk-and-cost.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "resembles": null,
+     "text": "how much investigation and validation is proportionate when only a dev tool is affected versus when billing data could be corrupted",
+     "hits": [
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.classify-failure-before-changing-test"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.scale-work-to-risk-and-cost.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "text": "coding showed the read-only checker would actually need writes and a rollback path, so the effort profile we planned no longer matches the job",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.testing.justify-regression-protection"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.scale-work-to-risk-and-cost.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "text": "mid-task we learned the sync download needs temp files, a queue, and cleanup, and the original lightweight plan may no longer hold",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.map-plan-to-user-capability.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.map-plan-to-user-capability",
+     "resembles": null,
+     "text": "the reset plan builds and validates a token but contains no task that stores the new password or ends the old sessions",
+     "hits": [
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.implementation.limit-investigation-to-current-decision"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.map-plan-to-user-capability.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.map-plan-to-user-capability",
+     "resembles": null,
+     "text": "the transfer flow has an endpoint and a confirmation screen, yet nothing reserves the items in the inventory service, so two buyers can oversell",
+     "hits": [
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.map-plan-to-user-capability.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.map-plan-to-user-capability",
+     "resembles": null,
+     "text": "my task list covers the screens and the API, but I am not sure the steps join up into the complete experience the requester described end to end",
+     "hits": [
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.make-recovery-behavior-explicit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.map-plan-to-user-capability.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": "agentic-coding.planning.map-plan-to-user-capability",
+     "text": "implementation is done; now I need to line up each collected test result with the specific promised behavior it demonstrates",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.map-plan-to-user-capability.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": "agentic-coding.planning.map-plan-to-user-capability",
+     "text": "which of the promised behaviors are actually backed by the checks we ran, and where do the results and the requirements line up",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.confirm-product-surface-expansion"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.plan-sufficient-evidence.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.plan-sufficient-evidence",
+     "resembles": null,
+     "text": "retry must never double-charge a card, but the planned checks are all unit tests around the retry helper and nothing watches the gateway's idempotency",
+     "hits": [
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.plan-sufficient-evidence.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.plan-sufficient-evidence",
+     "resembles": null,
+     "text": "the exported archive has to open in a separate consumer app, and so far the only planned verification is static analysis plus eyeballing the files",
+     "hits": [
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.requirements.define-acceptance-and-non-goals"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.plan-sufficient-evidence.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.plan-sufficient-evidence",
+     "resembles": null,
+     "text": "before coding starts, which observations would actually distinguish a working result from the plausible failures, at the cheapest cost that still catches them",
+     "hits": [
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.implementation.limit-investigation-to-current-decision"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.plan-sufficient-evidence.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": "agentic-coding.planning.plan-sufficient-evidence",
+     "text": "the checks already exist and passed; the open question is which required behaviors they do and do not cover",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "planning.plan-sufficient-evidence.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": "agentic-coding.planning.plan-sufficient-evidence",
+     "text": "schema validation, a rendered-page screenshot, and a phone download have all been run; how do I match each result to the outcome it supports",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.define-stop-condition.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "the task adds one search filter, but saved searches and suggestion hooks keep suggesting themselves and I do not know when the work is done",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.derive-committed-set-from-concerns"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.define-stop-condition.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "after finishing the CSV export the formatter interface looks so clean that a plug-in registry feels like natural next work; where is the boundary",
+     "hits": [
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.implementation.validate-at-the-owning-boundary"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "planning.define-stop-condition.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "what finished state and deferred list should I write down so this task can actually end instead of polishing the area forever",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.context.write-decision-dense-checkpoint"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.decide-scope-and-stop-conditions.p4",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": null,
+     "text": "we already settled what this task includes with the requester; all I still need is to write down when it counts as done and which nearby ideas get deferred so it can actually end",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.planning.plan-sufficient-evidence"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.define-stop-condition.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "text": "while implementing the filter I discovered a public index migration that changes the blast radius, and the finish line I wrote may no longer hold",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "planning.define-stop-condition.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "text": "new facts from coding changed what the work involves; do I keep the old boundary or revisit the whole plan",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.derive-committed-set-from-concerns.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.derive-committed-set-from-concerns",
+     "resembles": null,
+     "text": "our team standard keeps gaining one more check every time something breaks, and now every change drowns in exception arguments",
+     "hits": [
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.testing.justify-regression-protection"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.derive-committed-set-from-concerns.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.derive-committed-set-from-concerns",
+     "resembles": null,
+     "text": "I am drafting what a release must pass and a teammate keeps suggesting extra dimensions; how do I decide when the list is complete",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "planning.derive-committed-set-from-concerns.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.derive-committed-set-from-concerns",
+     "resembles": null,
+     "text": "the scoring guide grew from five bullets to fifteen and half of them measure the same thing, so each one now carries too little weight to separate good work from bad",
+     "hits": [
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.recovery.reground-after-context-loss"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.derive-committed-set-from-concerns.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": "agentic-coding.planning.derive-committed-set-from-concerns",
+     "text": "every agreed concern already has a required item; now someone wants to promote a nice-to-have capability into the committed plan because the interface makes it look cheap",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.derive-committed-set-from-concerns.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.planning.decide-scope-and-stop-conditions",
+     "resembles": "agentic-coding.planning.derive-committed-set-from-concerns",
+     "text": "the required behaviors are written down and each has an item; the open debate is whether a nice-to-have refactor enters the committed plan now",
+     "hits": [
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.keep-acceptance-path-completable.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.keep-acceptance-path-completable",
+     "resembles": null,
+     "text": "the new export command asks for confirmation on every run and the nightly script that calls it just hangs, because nobody can answer the prompt",
+     "hits": [
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.planning.plan-sufficient-evidence"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.keep-acceptance-path-completable.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.keep-acceptance-path-completable",
+     "resembles": null,
+     "text": "I am about to ship an import feature where one invalid row rejects the whole batch, and I have not traced the happy path through all the new checks",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.preserve-responsibility-boundaries"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "planning.keep-acceptance-path-completable.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.planning.keep-acceptance-path-completable",
+     "resembles": null,
+     "text": "every write on this route now passes three validators and a permission gate, and the demo account can no longer finish the flow the ticket asked for",
+     "hits": [
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.confirm-product-surface-expansion"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "planning.keep-acceptance-path-completable.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": "agentic-coding.planning.keep-acceptance-path-completable",
+     "text": "the same payload rule is checked at the controller, the service, and the repository, and I need to decide where it actually belongs",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "planning.keep-acceptance-path-completable.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": "agentic-coding.planning.keep-acceptance-path-completable",
+     "text": "the data was already validated where it entered; downstream modules want their own copy of the same check just because they are separate layers",
+     "hits": [
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.context.write-decision-dense-checkpoint"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "implementation.inspect-and-reuse-existing-capability.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": null,
+     "text": "I am about to hand-roll link normalization until I noticed the other importer already depends on a library that handles encoded paths and host casing",
+     "hits": [
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.context.write-decision-dense-checkpoint"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.inspect-and-reuse-existing-capability.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": null,
+     "text": "does the scheduling module already export a tested function for the booking-overlap rule before I write my own",
+     "hits": [
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.inspect-and-reuse-existing-capability.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": null,
+     "text": "before adding a new helper I should look at the nearest module, our declared dependencies, and what the runtime provides; how do I decide when I have looked enough",
+     "hits": [
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.validate-at-the-owning-boundary"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.inspect-and-reuse-existing-capability.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "text": "the repository and dependencies are clear; two viable designs remain and I must pick between a small adapter and a transform framework",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.inspect-and-reuse-existing-capability.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "text": "I have confirmed nothing ships the behavior; now the question is how little structure the discount rule needs, a direct rule or a pluggable pipeline",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.correction.restore-authoritative-baseline"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.limit-investigation-to-current-decision.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.limit-investigation-to-current-decision",
+     "resembles": null,
+     "text": "I found the settings button, its variant, and the color token; is opening all forty Button consumers and the old theme migration really going to change my edit",
+     "hits": [
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.delivery.report-material-residuals"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.limit-investigation-to-current-decision.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.limit-investigation-to-current-decision",
+     "resembles": null,
+     "text": "the bug is isolated to one handler and its serializer; do I really need to map every neighboring endpoint before the fix",
+     "hits": [
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.limit-investigation-to-current-decision.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.limit-investigation-to-current-decision",
+     "resembles": null,
+     "text": "how do I stop reading files for confidence and only inspect what can actually change the choice I am making right now",
+     "hits": [
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.limit-investigation-to-current-decision.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": "agentic-coding.implementation.limit-investigation-to-current-decision",
+     "text": "I have not even located the component that renders this yet; I need a focused search to find where the behavior lives before anything else",
+     "hits": [
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "implementation.limit-investigation-to-current-decision.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+     "resembles": "agentic-coding.implementation.limit-investigation-to-current-decision",
+     "text": "before deciding to write the parser myself I should check whether the platform's import package already provides one with tests",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.verification.bind-evidence-to-artifact-state"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "implementation.surface-unconfirmed-assumptions.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+     "resembles": null,
+     "text": "the importer must treat a missing description as absent or empty and both currently pass; I will pick one locally, so how should I record that choice",
+     "hits": [
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.surface-unconfirmed-assumptions.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+     "resembles": null,
+     "text": "the sample payload leaves the optional label out, so my serializer guess needs to stay reversible and clearly flagged until the schema owner answers",
+     "hits": [
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.testing.classify-failure-before-changing-test"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.surface-unconfirmed-assumptions.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+     "resembles": null,
+     "text": "I am filling an undefined detail into my change; what makes such a guess safe to proceed with versus something I must escalate first",
+     "hits": [
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.context.write-decision-dense-checkpoint"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.surface-unconfirmed-assumptions.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.requirements.resolve-source-authority",
+     "resembles": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+     "text": "the accepted specification and the current suite disagree about the public value, so either choice changes intended behavior and not just my local detail",
+     "hits": [
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "implementation.surface-unconfirmed-assumptions.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.requirements.resolve-source-authority",
+     "resembles": "agentic-coding.implementation.surface-unconfirmed-assumptions",
+     "text": "two governing documents contradict each other on record retention; this is not a guess I can mark local and move on",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "implementation.confirm-product-surface-expansion.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "resembles": null,
+     "text": "one order-shipped event is approved, and the sketch publishes arbitrary event names, custom headers, and a partner hook",
+     "hits": [
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.requirements.resolve-source-authority"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.confirm-product-surface-expansion.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "resembles": null,
+     "text": "compact and comfortable are the approved modes; should the component also accept whatever spacing tokens a caller passes",
+     "hits": [
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.testing.classify-failure-before-changing-test"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.confirm-product-surface-expansion.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "resembles": null,
+     "text": "approval for one setting or one event never means every variant is now public; how do I decide exactly which values get exposed",
+     "hits": [
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.confirm-product-surface-expansion.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "text": "the background export queue was never part of the accepted download task and adds new failure behavior, so does the scope need to be revisited",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.confirm-product-surface-expansion.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": "agentic-coding.implementation.confirm-product-surface-expansion",
+     "text": "what started as one endpoint has grown into a small event system with its own storage, and the accepted plan did not include this",
+     "hits": [
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "implementation.choose-smallest-sufficient-design.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": null,
+     "text": "the discount could be one direct rule or a configurable pipeline; both meet the request, so which extra layers are actually earned",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.choose-smallest-sufficient-design.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": null,
+     "text": "a tiny adapter gets the thumbnails done, while the transform graph would add a configuration model nobody has asked for",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.requirements.ground-user-goal"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.choose-smallest-sufficient-design.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": null,
+     "text": "how do I compare two designs that both satisfy the requirement by counting new state, indirection, and data passes instead of lines",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.choose-smallest-sufficient-design.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.review.run-subtractive-review-before-commit",
+     "resembles": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "text": "the work is coded, and the final diff still carries a duplicate parser and an unused wrapper that should come off before I commit",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.testing.justify-regression-protection"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.choose-smallest-sufficient-design.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.review.run-subtractive-review-before-commit",
+     "resembles": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "text": "implementation finished; now I need to strip the leftover abstractions while keeping the required size limits and partial-file cleanup behavior",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.derive-committed-set-from-concerns"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.validate-at-the-owning-boundary.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": null,
+     "text": "the HTTP adapter already parsed the quantity into a positive integer, and now the service and the repository each want to parse and clamp it again",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.justify-regression-protection"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.validate-at-the-owning-boundary.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": null,
+     "text": "the enforced gateway has established caller identity; do the unchanged internal helper calls each need their own authentication machinery",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.testing.assert-observable-behavior"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.validate-at-the-owning-boundary.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": null,
+     "text": "I am adding another guard midway through the data path; how do I tell whether this location can actually see an invalid value or the fact is already established",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.validate-at-the-owning-boundary.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "resembles": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "text": "the typed request is fine, but the remote status service times out and the proposal is to serve stale cache or an empty list instead",
+     "hits": [
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.review.validate-findings-before-action"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.validate-at-the-owning-boundary.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "resembles": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "text": "input checks are settled; the open question is what the caller should receive when the downstream dependency is unavailable",
+     "hits": [
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.make-recovery-behavior-explicit.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "resembles": null,
+     "text": "the client retries three times, the service repeats each whole call, and a broad catch swaps in an empty list after any failure",
+     "hits": [
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.testing.assert-observable-behavior"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.make-recovery-behavior-explicit.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "resembles": null,
+     "text": "the accepted outage mode allows a five-minute-old snapshot, but the same fallback is about to swallow decode errors and permission denials too",
+     "hits": [
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.make-recovery-behavior-explicit.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "resembles": null,
+     "text": "I am adding a retry-and-fallback wrapper around the failing call; how do I decide which failures can really recover and what the caller ends up seeing",
+     "hits": [
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.make-recovery-behavior-explicit.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "text": "nothing failed; the unchanged typed quantity is just being reparsed and re-clamped at every internal handoff",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.verification.bind-evidence-to-artifact-state"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.make-recovery-behavior-explicit.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.validate-at-the-owning-boundary",
+     "resembles": "agentic-coding.implementation.make-recovery-behavior-explicit",
+     "text": "no error has occurred; each layer simply insists on re-normalizing a value that was already checked where it entered",
+     "hits": [
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.make-recovery-behavior-explicit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.preserve-responsibility-boundaries.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.preserve-responsibility-boundaries",
+     "resembles": null,
+     "text": "the checkout screen could compute invoice totals locally, but refunds and the API orders path also depend on that rounding rule",
+     "hits": [
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.correction.restore-authoritative-baseline"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.preserve-responsibility-boundaries.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.preserve-responsibility-boundaries",
+     "resembles": null,
+     "text": "API orders and batch imports both reserve stock; where should the no-overselling invariant live so it cannot drift between entry points",
+     "hits": [
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.preserve-responsibility-boundaries.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.preserve-responsibility-boundaries",
+     "resembles": null,
+     "text": "a rule must stay consistent across several callers, so which owning module should hold it and what do the callers translate",
+     "hits": [
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.preserve-responsibility-boundaries.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": "agentic-coding.implementation.preserve-responsibility-boundaries",
+     "text": "the pricing module already owns rounding; the remaining choice is just which internal implementation is the lighter one",
+     "hits": [
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.confirm-product-surface-expansion"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "implementation.preserve-responsibility-boundaries.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.implementation.choose-smallest-sufficient-design",
+     "resembles": "agentic-coding.implementation.preserve-responsibility-boundaries",
+     "text": "ownership is settled; now between the direct typed call and the wrapper chain, which adds less machinery",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.scale-work-to-risk-and-cost"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.replan-on-material-drift.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": null,
+     "text": "the synchronous download now needs temp files, retries, a queue, and cleanup after the large fixture blew past the response limit",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.testing.classify-failure-before-changing-test"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.replan-on-material-drift.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": null,
+     "text": "the read-only migration checker turns out to require writes and a rollback path to repair corrupted records, and the job itself changed shape",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.implementation.validate-at-the-owning-boundary"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.replan-on-material-drift.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.implementation.replan-on-material-drift",
+     "resembles": null,
+     "text": "coding revealed state the accepted scope never included; do I keep patching locally or stop and revisit the scope with the requester",
+     "hits": [
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.requirements.ground-user-goal"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.replan-on-material-drift.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "resembles": "agentic-coding.implementation.replan-on-material-drift",
+     "text": "with writes and rollback now involved, how much validation depth and recovery effort does this change actually warrant",
+     "hits": [
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "implementation.replan-on-material-drift.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.planning.scale-work-to-risk-and-cost",
+     "resembles": "agentic-coding.implementation.replan-on-material-drift",
+     "text": "the blast radius grew from one screen to every receiver, so the effort profile should be reconsidered accordingly",
+     "hits": [
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.testing.assert-observable-behavior"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.anchor-tests-to-requirements.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.anchor-tests-to-requirements",
+     "resembles": null,
+     "text": "the retry-safe submission grew new helpers and status values, and I am writing one test per method without ever exercising duplicate submission",
+     "hits": [
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.make-recovery-behavior-explicit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.anchor-tests-to-requirements.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.anchor-tests-to-requirements",
+     "resembles": null,
+     "text": "before choosing assertions for the resumable upload work, nobody has named restart recovery and non-duplicated bytes as the promises to protect",
+     "hits": [
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.anchor-tests-to-requirements.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.anchor-tests-to-requirements",
+     "resembles": null,
+     "text": "how do I decide which of the new tests earn their place by protecting a required behavior rather than the helpers I happened to add",
+     "hits": [
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.testing.assert-observable-behavior"
+     ],
+     "hit_rank": 4,
+     "error": null
+    },
+    {
+     "id": "testing.anchor-tests-to-requirements.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.testing.justify-regression-protection",
+     "resembles": "agentic-coding.testing.anchor-tests-to-requirements",
+     "text": "the reproduced double charge is understood; is that enough reason to add a permanent redelivery check to the suite",
+     "hits": [
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.anchor-tests-to-requirements.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.testing.justify-regression-protection",
+     "resembles": "agentic-coding.testing.anchor-tests-to-requirements",
+     "text": "the failure is now diagnosed; when does it deserve a long-lived guard versus a one-time fix",
+     "hits": [
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.verification.bind-evidence-to-artifact-state"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "testing.assert-observable-behavior.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.assert-observable-behavior",
+     "resembles": null,
+     "text": "revoked access must fail on the next request, but the proposed test only checks the order of cache-helper calls",
+     "hits": [
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.assert-observable-behavior.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.assert-observable-behavior",
+     "resembles": null,
+     "text": "for the security rule we chose to protect, should the test watch the request get denied or inspect an internal cache flag",
+     "hits": [
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.implementation.preserve-responsibility-boundaries"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.assert-observable-behavior.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.assert-observable-behavior",
+     "resembles": null,
+     "text": "the suite freezes helper call order and mock interactions; how do I make it survive refactors while still failing when the promised outcome breaks",
+     "hits": [
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.implementation.make-recovery-behavior-explicit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.assert-observable-behavior.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.testing.anchor-tests-to-requirements",
+     "resembles": "agentic-coding.testing.assert-observable-behavior",
+     "text": "we have not settled which user promise or stable interface this test exists to protect before deciding what it should watch",
+     "hits": [
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.implementation.make-recovery-behavior-explicit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.assert-observable-behavior.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.testing.anchor-tests-to-requirements",
+     "resembles": "agentic-coding.testing.assert-observable-behavior",
+     "text": "before picking the assertion, what requirement is this new test supposed to be about",
+     "hits": [
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.testing.classify-failure-before-changing-test"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.classify-failure-before-changing-test.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.classify-failure-before-changing-test",
+     "resembles": null,
+     "text": "the polished UI refactor changed a snapshot and might have dropped keyboard navigation; updating the snapshot makes the suite green, but is that right",
+     "hits": [
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.testing.justify-regression-protection"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.classify-failure-before-changing-test.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.classify-failure-before-changing-test",
+     "resembles": null,
+     "text": "the migration test passes alone but fails after another suite; product bug, stale expectation, and leaked state are all still plausible",
+     "hits": [
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.requirements.resolve-source-authority"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.classify-failure-before-changing-test.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.classify-failure-before-changing-test",
+     "resembles": null,
+     "text": "a check just went red and I am itching to touch code or fixtures; how do I first find where the disagreement actually comes from",
+     "hits": [
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.classify-failure-before-changing-test.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": "agentic-coding.testing.classify-failure-before-changing-test",
+     "text": "the user has explicitly changed the required keyboard behavior, so the old expectation is superseded and the work must follow the new decision",
+     "hits": [
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.limit-investigation-to-current-decision"
+     ],
+     "hit_rank": null,
+     "error": null
+    },
+    {
+     "id": "testing.classify-failure-before-changing-test.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": "agentic-coding.testing.classify-failure-before-changing-test",
+     "text": "the requester's clarification means the old interpretation is rejected; remove its traces from tests and documentation",
+     "hits": [
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.context.give-delegated-agents-decision-context"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.justify-regression-protection.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.justify-regression-protection",
+     "resembles": null,
+     "text": "the double charge traced back to the serializer dropping its request ID; is a permanent redelivery test warranted",
+     "hits": [
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.correction.restore-authoritative-baseline"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.justify-regression-protection.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.justify-regression-protection",
+     "resembles": null,
+     "text": "the user removed helper text from one supplied screen; should that become a global phrase ban in the lint configuration",
+     "hits": [
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.preserve-responsibility-boundaries"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "testing.justify-regression-protection.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.testing.justify-regression-protection",
+     "resembles": null,
+     "text": "when does a fixed bug deserve a durable guard in the suite, and when is a one-off repair enough",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.planning.scale-work-to-risk-and-cost"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "testing.justify-regression-protection.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.testing.classify-failure-before-changing-test",
+     "resembles": "agentic-coding.testing.justify-regression-protection",
+     "text": "the failing test has not been reproduced or sorted by cause yet, so the durable behavior and recurrence risk are still unknown",
+     "hits": [
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 4,
+     "error": null
+    },
+    {
+     "id": "testing.justify-regression-protection.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.testing.classify-failure-before-changing-test",
+     "resembles": "agentic-coding.testing.justify-regression-protection",
+     "text": "before turning this red suite into new permanent checks, I first need to know what actually broke",
+     "hits": [
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "verification.map-evidence-to-acceptance.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": null,
+     "text": "booking math, build, static checks, and one submission all pass, yet nothing shows that a retry creates exactly one reservation",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.map-evidence-to-acceptance.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": null,
+     "text": "the report has schema results, a rendered-page screenshot, and a phone download; which result covers required fields, readability, or opening",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.recovery.reground-after-context-loss"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.map-evidence-to-acceptance.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": null,
+     "text": "I have a pile of green commands; how do I line each one up against the promised behaviors it does and does not demonstrate",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.map-evidence-to-acceptance.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": "agentic-coding.verification.map-evidence-to-acceptance",
+     "text": "the comparison shows interrupted download recovery has no supporting result anywhere; run the missing check, narrow the promise, or call it open",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.requirements.ground-user-goal"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.map-evidence-to-acceptance.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": "agentic-coding.verification.map-evidence-to-acceptance",
+     "text": "one promised outcome has nothing behind it; what are my options besides pretending the bundle of green checks covers it",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.verification.close-or-declare-evidence-gaps"
+     ],
+     "hit_rank": 5,
+     "error": null
+    },
+    {
+     "id": "verification.bind-evidence-to-artifact-state.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "resembles": null,
+     "text": "the archive passed the external compatibility check before the serialization cleanup changed the bytes that will ship",
+     "hits": [
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.recovery.reground-after-context-loss"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.bind-evidence-to-artifact-state.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "resembles": null,
+     "text": "the CLI built from commit A installed cleanly, but argument parsing changed at commit B and the old binary result keeps being cited",
+     "hits": [
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.verification.close-or-declare-evidence-gaps"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.bind-evidence-to-artifact-state.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "resembles": null,
+     "text": "when can I keep citing an earlier verification result after later edits, and what makes it stale",
+     "hits": [
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.delivery.claim-only-supported-outcome"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.bind-evidence-to-artifact-state.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "text": "the reviewer's cache-locale finding cites an older diff; my branch may already contain the missing key, and I should check before acting",
+     "hits": [
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.recovery.reground-after-context-loss"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.bind-evidence-to-artifact-state.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "text": "the incoming advice looks relevant but references an earlier state of the code; confirm it against the current branch first",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.implementation.confirm-product-surface-expansion"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "verification.close-or-declare-evidence-gaps.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": null,
+     "text": "the backup archive and its checksum exist, but nothing ever restored representative data into a clean database",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.delivery.report-material-residuals"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.close-or-declare-evidence-gaps.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": null,
+     "text": "fresh install and migration unit tests pass, while no check upgrades a real version-one store and reads its packs afterwards",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.verification.bind-evidence-to-artifact-state"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.close-or-declare-evidence-gaps.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": null,
+     "text": "one promised outcome has nothing behind it; do I run the missing check, shrink the promise, or report the item as unfinished",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.testing.assert-observable-behavior",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "verification.close-or-declare-evidence-gaps.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "text": "results have not been compared item by item yet, so no specific uncovered behavior has even been identified",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.verification.bind-evidence-to-artifact-state"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "verification.close-or-declare-evidence-gaps.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.map-evidence-to-acceptance",
+     "resembles": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "text": "before deciding what is missing, first match each collected result to the outcome it supports",
+     "hits": [
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.requirements.define-acceptance-and-non-goals"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "review.validate-findings-before-action.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": null,
+     "text": "the reviewer says drop the keyboard navigation because pointer tests pass and the event code looks complex",
+     "hits": [
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.validate-findings-before-action.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": null,
+     "text": "the review comment cites a cache-locale gap from an older diff; the current branch probably already has the key",
+     "hits": [
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.requirements.resolve-source-authority"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.validate-findings-before-action.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": null,
+     "text": "an analyzer or teammate flagged something; how do I confirm the issue really exists in this artifact before changing it",
+     "hits": [
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.implementation.confirm-product-surface-expansion",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.verification.bind-evidence-to-artifact-state"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.validate-findings-before-action.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "resembles": "agentic-coding.review.validate-findings-before-action",
+     "text": "the finding itself is confirmed relevant; the question is whether its cited test result still applies after the later change",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.testing.classify-failure-before-changing-test"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "review.validate-findings-before-action.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.bind-evidence-to-artifact-state",
+     "resembles": "agentic-coding.review.validate-findings-before-action",
+     "text": "I accept the issue is real, but the pass it leans on predates my last commit; does that result still count",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.recovery.validate-handoff-before-continuation"
+     ],
+     "hit_rank": 4,
+     "error": null
+    },
+    {
+     "id": "review.run-subtractive-review-before-commit.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.review.run-subtractive-review-before-commit",
+     "resembles": null,
+     "text": "the final diff keeps a duplicate parser and a wrapper, and with the upstream guard in place the service authorization block also looks removable",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.implementation.validate-at-the-owning-boundary",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.run-subtractive-review-before-commit.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.review.run-subtractive-review-before-commit",
+     "resembles": null,
+     "text": "chunked upload added a second media validator and an unused progress abstraction next to the required size limits and partial-file cleanup",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.run-subtractive-review-before-commit.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.review.run-subtractive-review-before-commit",
+     "resembles": null,
+     "text": "before handing off, walk the diff and justify every added file, fallback, and interface; what comes out and what must stay",
+     "hits": [
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.run-subtractive-review-before-commit.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": "agentic-coding.review.run-subtractive-review-before-commit",
+     "text": "a fresh external finding just arrived; first check it is true for the current requirement and artifact before folding it into the diff",
+     "hits": [
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.requirements.define-acceptance-and-non-goals"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "review.run-subtractive-review-before-commit.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.review.validate-findings-before-action",
+     "resembles": "agentic-coding.review.run-subtractive-review-before-commit",
+     "text": "mid-review someone reported a defect; confirm it against the current branch before deleting anything because of it",
+     "hits": [
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.recovery.reground-after-context-loss"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.claim-only-supported-outcome.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.delivery.claim-only-supported-outcome",
+     "resembles": null,
+     "text": "one queued edit now replays after reconnect, and I am about to tell the user the whole offline-sync feature is done",
+     "hits": [
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.claim-only-supported-outcome.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.delivery.claim-only-supported-outcome",
+     "resembles": null,
+     "text": "ranking passes the agreed cases on this index and no rollout or failover has happened; what exactly can I say is finished",
+     "hits": [
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.implementation.choose-smallest-sufficient-design"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.claim-only-supported-outcome.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.delivery.claim-only-supported-outcome",
+     "resembles": null,
+     "text": "how should I word the completion message so the verb and scope name only the behavior actually demonstrated",
+     "hits": [
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.planning.plan-sufficient-evidence"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.claim-only-supported-outcome.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": "agentic-coding.delivery.claim-only-supported-outcome",
+     "text": "a known uncovered behavior remains; gather the missing result, narrow the promise, or mark it explicitly unfinished before wording anything",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.planning.map-plan-to-user-capability",
+      "agentic-coding.review.validate-findings-before-action"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.claim-only-supported-outcome.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.verification.close-or-declare-evidence-gaps",
+     "resembles": "agentic-coding.delivery.claim-only-supported-outcome",
+     "text": "the restore path has no supporting run; resolve that gap or declare it open rather than wording around it",
+     "hits": [
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.implementation.limit-investigation-to-current-decision"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.report-material-residuals.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.delivery.report-material-residuals",
+     "resembles": null,
+     "text": "the dependency upgrade works for most callers; two consumers still use the old interface and could block the release",
+     "hits": [
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.implementation.limit-investigation-to-current-decision"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.report-material-residuals.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.delivery.report-material-residuals",
+     "resembles": null,
+     "text": "peak load was never exercised; the recipient needs the saturation exposure and the safe rollback setting, not my debug log",
+     "hits": [
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.report-material-residuals.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.delivery.report-material-residuals",
+     "resembles": null,
+     "text": "of everything left unfinished or uncertain, which items could change what the recipient does next, and what context do they need",
+     "hits": [
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.planning.derive-committed-set-from-concerns",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.planning.decide-scope-and-stop-conditions"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "delivery.report-material-residuals.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.delivery.claim-only-supported-outcome",
+     "resembles": "agentic-coding.delivery.report-material-residuals",
+     "text": "no open exposure or unfinished item matters to what the recipient will do next; what completion wording matches the demonstrated slice",
+     "hits": [
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.planning.plan-sufficient-evidence",
+      "agentic-coding.verification.close-or-declare-evidence-gaps",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "delivery.report-material-residuals.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.delivery.claim-only-supported-outcome",
+     "resembles": "agentic-coding.delivery.report-material-residuals",
+     "text": "everything remaining is immaterial, and the only wording task left is not overstating the demonstrated scope",
+     "hits": [
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.planning.derive-committed-set-from-concerns"
+     ],
+     "hit_rank": 4,
+     "error": null
+    },
+    {
+     "id": "correction.restore-authoritative-baseline.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": null,
+     "text": "the user clarified the status belongs on-screen as a badge, not in the weekly email that a nearby feature suggested",
+     "hits": [
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.requirements.ground-user-goal",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.delivery.claim-only-supported-outcome"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "correction.restore-authoritative-baseline.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": null,
+     "text": "the requester removed the agent-added helper text from one screen, yet the old route still shapes tests and documentation",
+     "hits": [
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "correction.restore-authoritative-baseline.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": null,
+     "text": "a correction just invalidated part of the interpretation the work was built on; how far does the cleanup reach without inventing new bans",
+     "hits": [
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.implementation.surface-unconfirmed-assumptions",
+      "agentic-coding.testing.justify-regression-protection",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "correction.restore-authoritative-baseline.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": "agentic-coding.correction.restore-authoritative-baseline",
+     "text": "another agent says the scope changed, but no user, maintainer, or accepted specification has authorized that change",
+     "hits": [
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.review.validate-findings-before-action",
+      "agentic-coding.implementation.confirm-product-surface-expansion"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "correction.restore-authoritative-baseline.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": "agentic-coding.correction.restore-authoritative-baseline",
+     "text": "a delegated report claims the direction shifted; verify that claim against the actual request before acting on it",
+     "hits": [
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "context.give-delegated-agents-decision-context.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.context.give-delegated-agents-decision-context",
+     "resembles": null,
+     "text": "I am handing the installer change to a subagent with only the plan path and a generic quality-bar instruction",
+     "hits": [
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.requirements.resolve-source-authority"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.give-delegated-agents-decision-context.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.context.give-delegated-agents-decision-context",
+     "resembles": null,
+     "text": "the writer needs to preserve both official and custom registry support, but those constraints, the rejected scheduler example, and the escalation boundary live only in my head",
+     "hits": [
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.planning.scale-work-to-risk-and-cost"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.give-delegated-agents-decision-context.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.context.give-delegated-agents-decision-context",
+     "resembles": null,
+     "text": "what belongs in the brief for a bounded subtask so the receiver does not rediscover scope, rejected options, and quality choices on their own",
+     "hits": [
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.testing.anchor-tests-to-requirements",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.give-delegated-agents-decision-context.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": "agentic-coding.context.give-delegated-agents-decision-context",
+     "text": "the subagent has returned with claims and changed files; now I need to check whether that result is accurate for the current branch",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.testing.anchor-tests-to-requirements"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.give-delegated-agents-decision-context.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": "agentic-coding.context.give-delegated-agents-decision-context",
+     "text": "the delegated writer just reported completion; verify the cited outcome before continuing on top of it",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.implementation.make-recovery-behavior-explicit",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.implementation.replan-on-material-drift"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.write-decision-dense-checkpoint.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.context.write-decision-dense-checkpoint",
+     "resembles": null,
+     "text": "compaction is imminent, implementation is not authorized yet, and the denial path is unverified; what must survive the pause",
+     "hits": [
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.delivery.report-material-residuals",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.write-decision-dense-checkpoint.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.context.write-decision-dense-checkpoint",
+     "resembles": null,
+     "text": "the migration pauses after forward migration passes; populated-data rollback, rejected approaches, and the current commit need to outlive the pause",
+     "hits": [
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.write-decision-dense-checkpoint.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.context.write-decision-dense-checkpoint",
+     "resembles": null,
+     "text": "I am about to lose context; how do I record controlling sources, accepted choices, and the first unfinished behavior without dumping logs",
+     "hits": [
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.requirements.resolve-source-authority",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.implementation.limit-investigation-to-current-decision",
+      "agentic-coding.planning.keep-acceptance-path-completable"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "context.write-decision-dense-checkpoint.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.recovery.reground-after-context-loss",
+     "resembles": "agentic-coding.context.write-decision-dense-checkpoint",
+     "text": "context is already gone and the resumed session must reopen the request, the current files, and the recorded results",
+     "hits": [
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.context.give-delegated-agents-decision-context",
+      "agentic-coding.recovery.validate-handoff-before-continuation"
+     ],
+     "hit_rank": 2,
+     "error": null
+    },
+    {
+     "id": "context.write-decision-dense-checkpoint.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.recovery.reground-after-context-loss",
+     "resembles": "agentic-coding.context.write-decision-dense-checkpoint",
+     "text": "the summary is all that is left; treat it as an index and recheck the durable sources before editing further",
+     "hits": [
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.planning.decide-scope-and-stop-conditions",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.context.write-decision-dense-checkpoint"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.reground-after-context-loss.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.recovery.reground-after-context-loss",
+     "resembles": null,
+     "text": "after compaction the summary says remote install is complete, but only a fake transport was ever exercised",
+     "hits": [
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.requirements.define-acceptance-and-non-goals",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.delivery.claim-only-supported-outcome"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.reground-after-context-loss.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.recovery.reground-after-context-loss",
+     "resembles": null,
+     "text": "the resumed parser refactor remembers green core tests but not whether truncated-input recovery was ever exercised",
+     "hits": [
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.verification.map-evidence-to-acceptance",
+      "agentic-coding.verification.bind-evidence-to-artifact-state",
+      "agentic-coding.delivery.report-material-residuals"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.reground-after-context-loss.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.recovery.reground-after-context-loss",
+     "resembles": null,
+     "text": "I am continuing from a compacted summary; which durable sources do I reopen before trusting any remembered conclusion",
+     "hits": [
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.planning.keep-acceptance-path-completable",
+      "agentic-coding.recovery.validate-handoff-before-continuation"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.reground-after-context-loss.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.context.write-decision-dense-checkpoint",
+     "resembles": "agentic-coding.recovery.reground-after-context-loss",
+     "text": "the pause has not happened yet and I still hold the full picture; capture the decisive state now before it is compacted",
+     "hits": [
+      "agentic-coding.implementation.preserve-responsibility-boundaries",
+      "agentic-coding.testing.classify-failure-before-changing-test",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.context.give-delegated-agents-decision-context"
+     ],
+     "hit_rank": 3,
+     "error": null
+    },
+    {
+     "id": "recovery.reground-after-context-loss.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.context.write-decision-dense-checkpoint",
+     "resembles": "agentic-coding.recovery.reground-after-context-loss",
+     "text": "compaction is about to run; record scope, rejected options, and evidence limits while I still can",
+     "hits": [
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.implementation.choose-smallest-sufficient-design",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.implementation.inspect-and-reuse-existing-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.validate-handoff-before-continuation.p1",
+     "kind": "positive",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": null,
+     "text": "the migration specialist reports verified rollback, but the cited run covered only forward migration on an earlier commit",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.context.write-decision-dense-checkpoint",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.review.run-subtractive-review-before-commit"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.validate-handoff-before-continuation.p2",
+     "kind": "positive",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": null,
+     "text": "the delegated rate-limit fix proves single-process bursts, and shared-store failover was never run on this branch",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.planning.scale-work-to-risk-and-cost",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.verification.close-or-declare-evidence-gaps"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.validate-handoff-before-continuation.p3",
+     "kind": "positive",
+     "expect": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "resembles": null,
+     "text": "before I build on another agent's completion summary, which request, commit, and cited result do I check, and how far",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.implementation.replan-on-material-drift",
+      "agentic-coding.verification.map-evidence-to-acceptance"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.validate-handoff-before-continuation.n1",
+     "kind": "neighbor",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "text": "the user explicitly changed the requirement, so this is an authorized correction to reset around, not a handoff claim to verify",
+     "hits": [
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.delivery.claim-only-supported-outcome",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 1,
+     "error": null
+    },
+    {
+     "id": "recovery.validate-handoff-before-continuation.n2",
+     "kind": "neighbor",
+     "expect": "agentic-coding.correction.restore-authoritative-baseline",
+     "resembles": "agentic-coding.recovery.validate-handoff-before-continuation",
+     "text": "the requester's new decision invalidates the old route; remove it everywhere rather than re-checking the other agent's summary",
+     "hits": [
+      "agentic-coding.recovery.validate-handoff-before-continuation",
+      "agentic-coding.recovery.reground-after-context-loss",
+      "agentic-coding.review.run-subtractive-review-before-commit",
+      "agentic-coding.correction.restore-authoritative-baseline",
+      "agentic-coding.planning.map-plan-to-user-capability"
+     ],
+     "hit_rank": 4,
+     "error": null
+    }
+   ],
+   "gate": {
+    "metric": "positive_top3",
+    "min": 0.9,
+    "observed": 0.9906,
+    "passed": true,
+    "source": "fixture"
+   }
+  }
+ },
+ "gate_failures": [],
+ "migration_validation": {
+  "checked": true,
+  "failures": []
+ }
+}
