@@ -22,7 +22,6 @@ import json
 import os
 import re
 import shutil
-import subprocess
 import sys
 import time
 from collections import defaultdict
@@ -32,6 +31,14 @@ try:
 except ImportError:  # pragma: no cover
     print("error: PyYAML is required (pip install pyyaml)", file=sys.stderr)
     sys.exit(1)
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+
+from eval_queries_baseline import baseline_compatibility_errors, compare_baseline
+from eval_queries_candidate import project_pack_details
+from eval_queries_lore import run_lore as _run_lore_impl
 
 SCHEMA = "eval-queries-run/1"
 RUNNING_STATES = {"preparing", "running", "building", "pending"}
@@ -46,53 +53,14 @@ QUERY_MIGRATION_KINDS = {"reassign", "merge", "replace", "retire"}
 PRACTICE_MIGRATION_KINDS = {"merge", "replace", "retire", "refine"}
 
 
+def run_lore(lore, args, store_root, timeout, project_root=None):
+    # Test and orchestration boundary: candidate loading can be patched independently.
+    return _run_lore_impl(lore, args, store_root, timeout, project_root)
+
+
 def _now() -> str:
     return _dt.datetime.now(_dt.timezone.utc).replace(microsecond=0).isoformat()
 
-
-def run_lore(lore: str, args: list, store_root: str | None, timeout: float, project_root: str | None = None) -> dict:
-    """Run one lore CLI invocation and return {"ok", "data"/"error", "exit", "raw"}.
-
-    ``--json`` is prepended as a global flag because current lore releases emit human
-    text by default and require machine callers to opt into JSON. Candidate mode also
-    forwards ``--project-root`` when set.
-    """
-    cmd = [lore, "--json"]
-    if store_root:
-        cmd += ["--store-root", store_root]
-    if project_root:
-        cmd += ["--project-root", project_root]
-    cmd += args
-    try:
-        proc = subprocess.run(
-            cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout
-        )
-    except subprocess.TimeoutExpired:
-        return {"ok": False, "error": {"code": "harness.timeout", "message": f"lore {' '.join(args[0:2])} timed out"}, "exit": -1, "raw": ""}
-    except OSError as exc:
-        return {"ok": False, "error": {"code": "harness.exec-failed", "message": str(exc)}, "exit": -1, "raw": ""}
-    payload = None
-    start = proc.stdout.find("{")
-    if start >= 0:
-        try:
-            payload = json.loads(proc.stdout[start:])
-        except json.JSONDecodeError:
-            payload = None
-    if payload is None:
-        return {
-            "ok": False,
-            "error": {"code": "harness.no-json", "message": (proc.stderr or proc.stdout).strip()[:400]},
-            "exit": proc.returncode,
-            "raw": proc.stdout,
-        }
-    payload.setdefault("ok", False)
-    return {
-        "ok": bool(payload.get("ok")),
-        "data": payload.get("data"),
-        "error": payload.get("error"),
-        "exit": proc.returncode,
-        "raw": proc.stdout,
-    }
 
 
 def load_fixtures(path: str) -> dict:
@@ -208,204 +176,6 @@ def installed_pack_details(lore: str, name: str, store_root: str | None) -> dict
         ],
     }
 
-
-def _read_practice_frontmatter(path: str) -> dict:
-    with open(path, encoding="utf-8") as fh:
-        text = fh.read()
-    if not text.startswith("---"):
-        return {}
-    end = text.find("\n---", 3)
-    if end < 0:
-        return {}
-    return yaml.safe_load(text[3:end]) or {}
-
-
-def _candidate_pack_root(project_root: str, pack_name: str) -> str:
-    return os.path.join(project_root, ".lorelum", "packs", pack_name)
-
-
-def _candidate_practice_files(project_root: str, pack_name: str) -> list:
-    base = os.path.join(_candidate_pack_root(project_root, pack_name), "practices")
-    out = []
-    for dirpath, _dirs, files in os.walk(base):
-        for fn in files:
-            if fn.endswith(".md"):
-                out.append(os.path.join(dirpath, fn))
-    return sorted(out)
-
-
-def _lore_failure(action: str, res: dict) -> str:
-    err = res.get("error") or {}
-    return f"error: lore {action} failed: {err.get('code')}: {err.get('message')}"
-
-
-def _validate_candidate_pack(lore: str, pack_root: str, store_root: str | None) -> None:
-    res = run_lore(lore, ["validate", pack_root], store_root, 120)
-    if not res["ok"]:
-        raise SystemExit(_lore_failure("validate candidate Pack", res))
-    data = res.get("data") or {}
-    pack = data.get("pack") or {}
-    diagnostics = pack.get("diagnostics") or []
-    errors = [d for d in diagnostics if str(d.get("level", "")).lower() == "error"]
-    if pack.get("valid") is not True or errors:
-        detail = "; ".join(
-            f"{d.get('code', 'unknown')}: {d.get('message', '')}" for d in (errors or diagnostics)
-        ) or "Pack validation returned valid=false"
-        raise SystemExit(f"error: candidate Pack validation failed: {detail}")
-
-
-def _read_active_candidate_practice(
-    lore: str,
-    practice_id: str,
-    pack_name: str,
-    project_root: str,
-    store_root: str | None,
-) -> dict:
-    res = run_lore(lore, ["get", practice_id], store_root, 120, project_root)
-    if not res["ok"]:
-        raise SystemExit(_lore_failure(f"get {practice_id}", res))
-    data = res.get("data") or {}
-    practice = data.get("practice") or {}
-    if practice.get("id") != practice_id:
-        raise SystemExit(
-            f"error: lore get {practice_id} returned Practice '{practice.get('id', '')}'"
-        )
-    project_sources = [
-        src for src in (data.get("sources") or [])
-        if str(src.get("packName", "")) == pack_name
-        and str(src.get("packRoot", "")).startswith("project-layer-")
-    ]
-    if not project_sources:
-        observed = "; ".join(
-            f"{src.get('packName')}/{src.get('packRoot')}" for src in (data.get("sources") or [])
-        ) or "(no sources)"
-        raise SystemExit(
-            f"error: lore get {practice_id} did not resolve to the candidate project source; observed: {observed}"
-        )
-    return {
-        "id": practice_id,
-        "title": practice.get("title", ""),
-        "applies_when": practice.get("applies_when", ""),
-    }
-
-
-def project_pack_details(lore: str, project_root: str, pack_name: str, store_root: str | None) -> dict:
-    """Validate and discover a candidate Pack from a ProjectContext.
-
-    Candidate mode proves the source in layers: Pack validation, active project context,
-    Practice-set agreement, and one ``lore get`` read for every active Practice. The returned
-    shape matches ``installed_pack_details()`` so downstream coverage/discipline/report code
-    stays source-agnostic.
-    """
-    pack_root = _candidate_pack_root(project_root, pack_name)
-    pack_yaml = os.path.join(pack_root, "pack.yaml")
-    try:
-        with open(pack_yaml, encoding="utf-8") as fh:
-            pack_meta = yaml.safe_load(fh) or {}
-    except (OSError, yaml.YAMLError) as exc:
-        raise SystemExit(f"error: cannot read candidate Pack metadata {pack_yaml}: {exc}")
-    if str(pack_meta.get("name", "")) != pack_name:
-        raise SystemExit(
-            f"error: candidate Pack metadata names '{pack_meta.get('name', '')}', expected '{pack_name}'"
-        )
-    version = str(pack_meta.get("version", ""))
-
-    _validate_candidate_pack(lore, pack_root, store_root)
-
-    res = run_lore(lore, ["context", "status"], store_root, 120, project_root)
-    if not res["ok"]:
-        raise SystemExit(_lore_failure("context status", res))
-    data = res.get("data") or {}
-    state = data.get("state")
-    if state != "ready":
-        raise SystemExit(f"error: candidate ProjectContext is not ready (state: {state or 'missing'})")
-    if data.get("base") != "none":
-        raise SystemExit(
-            f"error: candidate ProjectContext base must be 'none', got '{data.get('base', 'missing')}'"
-        )
-    warnings = data.get("warnings") or []
-    if warnings:
-        codes = ", ".join(str(w.get("code", "unknown")) for w in warnings)
-        raise SystemExit(f"error: candidate ProjectContext reported warnings: {codes}")
-
-    sources = data.get("sources") or []
-    active_sources = [
-        src for src in sources
-        if str(src.get("scope", "")) == "project"
-        and str(src.get("status", "")) == "active"
-        and str(src.get("packName", "")) == pack_name
-    ]
-    if not active_sources:
-        observed = "; ".join(
-            f"{src.get('scope')}/{src.get('status')}/{src.get('packName')}" for src in sources
-        ) or "(no sources)"
-        raise SystemExit(
-            f"error: no active project source for Pack '{pack_name}'; observed sources: {observed}"
-        )
-
-    practices = []
-    seen_ids = set()
-    for path in _candidate_practice_files(project_root, pack_name):
-        fm = _read_practice_frontmatter(path)
-        pid = fm.get("id")
-        if not pid or not str(pid).startswith(pack_name + "."):
-            continue
-        pid = str(pid)
-        if pid in seen_ids:
-            raise SystemExit(f"error: duplicate candidate Practice ID: {pid}")
-        seen_ids.add(pid)
-        practices.append(pid)
-    if not practices:
-        raise SystemExit(f"error: no candidate Practices found under {pack_root}")
-
-    file_ids = set(practices)
-    active_ids = {
-        str(src.get("practiceId"))
-        for src in active_sources
-        if src.get("practiceId")
-    }
-    if active_ids:
-        if file_ids != active_ids:
-            ignored = sorted(file_ids - active_ids)
-            unexpected = sorted(active_ids - file_ids)
-            parts = []
-            if ignored:
-                parts.append(f"{len(ignored)} candidate practice file(s) are not active: {', '.join(ignored)}")
-            if unexpected:
-                parts.append(f"{len(unexpected)} active practice(s) were not found in candidate files: {', '.join(unexpected)}")
-            raise SystemExit(
-                "error: candidate practice set does not match the active ProjectContext source: " + "; ".join(parts)
-            )
-    else:
-        declared = data.get("practiceCount")
-        try:
-            declared_count = int(declared)
-        except (TypeError, ValueError):
-            declared_count = None
-        if declared_count != len(file_ids):
-            raise SystemExit(
-                f"error: context status practiceCount {declared!r} does not match "
-                f"{len(file_ids)} candidate Practice files under {pack_root}"
-            )
-        active_ids = file_ids
-
-    runtime_practices = [
-        _read_active_candidate_practice(lore, pid, pack_name, project_root, store_root)
-        for pid in sorted(active_ids or file_ids)
-    ]
-    return {
-        "name": pack_name,
-        "version": version,
-        "practice_ids": sorted(p["id"] for p in runtime_practices),
-        "practices": runtime_practices,
-        "candidate_checks": {
-            "pack_validated": True,
-            "context_state": state,
-            "context_base": data.get("base"),
-            "practice_files": len(file_ids),
-            "practice_get_verified": len(runtime_practices),
-        },
-    }
 
 
 DISCIPLINE_STOPWORDS = set(
@@ -688,138 +458,6 @@ def compute_metrics(results: list, top_k: int) -> dict:
     }
 
 
-
-def compare_baseline(current: list, baseline_results: list, top_k: int, fixture_queries: dict | None = None) -> dict:
-    required_fields = ("id", "expect", "text", "hit_rank", "error")
-    baseline_schema_errors = []
-    for row in baseline_results:
-        missing = [field for field in required_fields if field not in row or (field == "text" and not row.get(field))]
-        if missing:
-            baseline_schema_errors.append({"id": row.get("id", "(missing id)"), "missing": missing})
-    baseline_ids = {r["id"] for r in baseline_results if r.get("id")}
-    base = {r["id"]: r for r in baseline_results if not r.get("error") and r.get("id")}
-    fixture_queries = fixture_queries or {}
-    regressions, improvements = [], []
-    migrations, migration_failures, mismatches = [], [], []
-    common = 0
-    for r in current:
-        b = base.get(r["id"])
-        if not b or r["error"]:
-            continue
-        common += 1
-        q = fixture_queries.get(r["id"], {})
-        if b.get("text") and b.get("text") != r.get("text"):
-            mismatches.append({
-                "id": r["id"],
-                "reason": "Query text changed while reusing the baseline Query ID; retire the old Query and add a new ID",
-            })
-            continue
-        expected_changed = b.get("expect") != r.get("expect")
-        if expected_changed:
-            valid_migration = (
-                q.get("previous_expect") == b.get("expect")
-                and q.get("expect") == r.get("expect")
-            )
-            if not valid_migration:
-                mismatches.append({
-                    "id": r["id"],
-                    "baseline_expect": b.get("expect"),
-                    "current_expect": r.get("expect"),
-                    "reason": "expected Practice changed without matching previous_expect migration metadata",
-                })
-                continue
-            now_hit = r["hit_rank"] is not None and r["hit_rank"] <= top_k
-            row = {
-                "id": r["id"],
-                "previous_expect": b.get("expect"),
-                "expect": r.get("expect"),
-                "baseline_rank": b.get("hit_rank"),
-                "now_rank": r.get("hit_rank"),
-                "migration_kind": q.get("migration_kind"),
-            }
-            migrations.append(row)
-            if not now_hit:
-                migration_failures.append(row)
-            continue
-        was_hit = b.get("hit_rank") is not None and b["hit_rank"] <= top_k
-        now_hit = r["hit_rank"] is not None and r["hit_rank"] <= top_k
-        if was_hit and not now_hit:
-            regressions.append({"id": r["id"], "baseline_rank": b["hit_rank"], "now": r["hits"][:3]})
-        elif now_hit and not was_hit:
-            improvements.append({"id": r["id"], "now_rank": r["hit_rank"]})
-    retired_ids = {
-        q["id"] for q in fixture_queries.values()
-        if q.get("status", "frozen") == "retired"
-    }
-    baseline_only = sorted(baseline_ids - set(fixture_queries))
-    return {
-        "common_queries": common,
-        "regressions": regressions,
-        "improvements": improvements,
-        "migrations": migrations,
-        "migration_failures": migration_failures,
-        "expect_mismatches": mismatches,
-        "baseline_schema_errors": baseline_schema_errors,
-        "retired_queries": sorted(set(base) & retired_ids),
-        "unaccounted_baseline_queries": baseline_only,
-    }
-
-
-
-def baseline_compatibility_errors(baseline: dict, pack_name: str, fixture_set: str, top_k: int, modes: list) -> list:
-    """Reject absent or incompatible evidence rather than treating it as zero regressions."""
-    if not isinstance(baseline, dict):
-        return ["baseline must be a JSON object"]
-    errors = []
-    pack = baseline.get("pack")
-    if not isinstance(pack, dict) or pack.get("name") != pack_name:
-        errors.append(f"baseline Pack must be {pack_name}")
-    if baseline.get("fixture_set") != fixture_set:
-        errors.append(f"baseline fixture_set must be {fixture_set}")
-    if baseline.get("top_k") != top_k:
-        errors.append(f"baseline top_k must be {top_k}")
-    totals = baseline.get("totals")
-    runnable = totals.get("runnable") if isinstance(totals, dict) else None
-    if not isinstance(runnable, int) or isinstance(runnable, bool) or runnable <= 0:
-        errors.append("baseline totals.runnable must be a positive integer")
-        runnable = None
-    if baseline.get("partial_run") is True or baseline.get("limit") is not None:
-        errors.append("baseline must be a complete run")
-    sections = baseline.get("modes")
-    if not isinstance(sections, dict):
-        return errors + ["baseline modes must be an object"]
-    for mode in modes:
-        section = sections.get(mode)
-        rows = section.get("results") if isinstance(section, dict) else None
-        if not isinstance(rows, list) or not rows:
-            errors.append(f"baseline {mode} mode needs non-empty results")
-            continue
-        if runnable is not None and len(rows) != runnable:
-            errors.append(f"baseline {mode} has {len(rows)} results, expected {runnable} runnable Queries")
-        seen = set()
-        for row in rows:
-            if not isinstance(row, dict):
-                errors.append(f"baseline {mode} has a non-object result")
-                continue
-            qid = row.get("id")
-            required = ("id", "expect", "text", "hit_rank", "hits", "error")
-            missing = [field for field in required if field not in row or (field in ("id", "expect", "text") and not row[field])]
-            if missing:
-                errors.append(f"baseline {mode} result {qid or '(missing id)'} missing {', '.join(missing)}")
-            if any(not isinstance(row.get(field), str) or not row[field].strip() for field in ("id", "expect", "text")):
-                errors.append(f"baseline {mode} has an invalid Query identity, expectation or text")
-                continue
-            if qid in seen:
-                errors.append(f"baseline {mode} has duplicate Query ID {qid}")
-            seen.add(qid)
-            if row.get("error"):
-                errors.append(f"baseline {mode} result {qid} has a Query error")
-            if "hits" in row and not isinstance(row["hits"], list):
-                errors.append(f"baseline {mode} result {qid} has invalid hits")
-            rank = row.get("hit_rank")
-            if rank is not None and (not isinstance(rank, int) or isinstance(rank, bool) or rank < 1):
-                errors.append(f"baseline {mode} result {qid} has invalid hit_rank")
-    return errors
 
 
 def render_report(run: dict) -> str:

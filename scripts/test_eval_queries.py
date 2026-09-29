@@ -30,6 +30,12 @@ def _load_module():
 
 
 MOD = _load_module()
+HERE = os.path.dirname(os.path.abspath(__file__))
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+
+import eval_queries_candidate
+import eval_queries_lore
 
 
 class _Proc:
@@ -98,11 +104,11 @@ def _candidate_sources(ids=("agentic-coding.context.foo",)):
 
 class RunLoreTests(unittest.TestCase):
     def test_json_and_project_root_are_forwarded(self):
-        with mock.patch.object(MOD.subprocess, "run", return_value=_Proc('{"ok": true, "data": {}}')) as run:
-            MOD.run_lore("lore", ["query", "x"], None, 60)
+        with mock.patch.object(eval_queries_lore.subprocess, "run", return_value=_Proc('{"ok": true, "data": {}}')) as run:
+            eval_queries_lore.run_lore("lore", ["query", "x"], None, 60)
             self.assertEqual(run.call_args[0][0], ["lore", "--json", "query", "x"])
-        with mock.patch.object(MOD.subprocess, "run", return_value=_Proc('{"ok": true, "data": {}}')) as run:
-            MOD.run_lore("lore", ["query", "x"], "/store", 60, "/proj")
+        with mock.patch.object(eval_queries_lore.subprocess, "run", return_value=_Proc('{"ok": true, "data": {}}')) as run:
+            eval_queries_lore.run_lore("lore", ["query", "x"], "/store", 60, "/proj")
             self.assertEqual(run.call_args[0][0], ["lore", "--json", "--store-root", "/store", "--project-root", "/proj", "query", "x"])
 
 
@@ -121,7 +127,7 @@ class ProjectPackDetailsTests(unittest.TestCase):
                 return get_result
             raise AssertionError(f"unexpected lore args: {args}")
 
-        with mock.patch.object(MOD, "run_lore", side_effect=fake_run):
+        with mock.patch.object(eval_queries_candidate, "run_lore", side_effect=fake_run):
             return MOD.project_pack_details("lore", root, "agentic-coding", "/store")
 
     def test_filters_active_project_source_and_reads_version(self):
@@ -149,7 +155,7 @@ class ProjectPackDetailsTests(unittest.TestCase):
                 if args[0] == "validate":
                     return _validation()
                 return _context_status(_candidate_sources(), state="degraded")
-            with mock.patch.object(MOD, "run_lore", side_effect=fake_run):
+            with mock.patch.object(eval_queries_candidate, "run_lore", side_effect=fake_run):
                 with self.assertRaisesRegex(SystemExit, "not ready"):
                     MOD.project_pack_details("lore", root, "agentic-coding", "/store")
 
@@ -273,7 +279,7 @@ class BaselineRegressionTests(unittest.TestCase):
             if args[0] == "query":
                 return query_result or {"ok": True, "data": {"results": []}}
             raise AssertionError(f"unexpected lore args: {args}")
-        with mock.patch.object(sys, "argv", argv), mock.patch.object(MOD, "run_lore", side_effect=fake_run):
+        with mock.patch.object(sys, "argv", argv), mock.patch.object(eval_queries_candidate, "run_lore", side_effect=fake_run), mock.patch.object(MOD, "run_lore", side_effect=fake_run):
             return MOD.main()
 
     def test_fail_on_regression_returns_one(self):
@@ -334,7 +340,7 @@ class BaselineRegressionTests(unittest.TestCase):
                 raise AssertionError(args)
             argv = ["eval-queries", "--project-root", proj, "--fixtures", fixture, "--mode", "keyword",
                     "--min-top3", "0.75", "--require-frozen", "--out", out]
-            with mock.patch.object(sys, "argv", argv), mock.patch.object(MOD, "run_lore", side_effect=fake_run):
+            with mock.patch.object(sys, "argv", argv), mock.patch.object(eval_queries_candidate, "run_lore", side_effect=fake_run), mock.patch.object(MOD, "run_lore", side_effect=fake_run):
                 self.assertEqual(MOD.main(), 1)
             with open(out, encoding="utf-8") as fh: run = json.load(fh)
             self.assertEqual(run["modes"]["keyword"]["metrics"]["positive"]["top3_rate"], 0.5)
