@@ -6,6 +6,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
+POSITIVE_GATE_TOP_K = 3
+
+
 @dataclass(frozen=True)
 class RunPolicy:
     formal: bool

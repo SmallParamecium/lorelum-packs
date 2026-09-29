@@ -38,7 +38,7 @@ if SCRIPT_DIR not in sys.path:
 
 from eval_queries_baseline import baseline_compatibility_errors, compare_baseline
 from eval_queries_candidate import project_pack_details
-from eval_queries_gates import GateFailure, limit_conflicts_with_formal_gates, resolve_run_policy
+from eval_queries_gates import POSITIVE_GATE_TOP_K, GateFailure, limit_conflicts_with_formal_gates, resolve_run_policy
 from eval_queries_lore import run_lore as _run_lore_impl
 
 SCHEMA = "eval-queries-run/1"
@@ -595,7 +595,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Evaluate fixture queries against an installed Pack via the lore CLI.")
     ap.add_argument("--fixtures", default=os.path.join("fixtures", "agentic-coding", "queries.yaml"))
     ap.add_argument("--mode", choices=("keyword", "semantic", "both"), default="both")
-    ap.add_argument("--top-k", type=int, default=3, help="hit threshold; ranking is fetched a little deeper")
+    ap.add_argument("--top-k", type=int, default=3, help="metric and baseline-regression Top-k threshold; --min-top3 remains a fixed Top-3 positive gate")
     ap.add_argument("--store-root", default=None, help="isolated LocalStore directory forwarded to lore")
     install_group = ap.add_mutually_exclusive_group()
     install_group.add_argument("--ensure-install", default=None, metavar="PACK[@VERSION]", help="lore pack install first if needed")
@@ -611,7 +611,7 @@ def main() -> int:
     ap.add_argument("--require-coverage", action="store_true", help="fail if any installed Practice has no positive queries")
     ap.add_argument("--require-frozen", action="store_true", help="fail if any active fixture Query is not status: frozen")
     ap.add_argument("--check-discipline", action="store_true", help="fail if any query shares a 4+-word run with an installed Practice's title/applies_when (quotation matches prove nothing)")
-    ap.add_argument("--min-top3", type=float, default=None, metavar="RATE", help="gate: minimum positive top-3 hit rate (0-1) for each evaluated mode; defaults to the fixture's min_top3 when present. Exit 1 below it; degraded modes are reported as not evaluated")
+    ap.add_argument("--min-top3", type=float, default=None, metavar="RATE", help="gate: minimum fixed positive Top-3 hit rate (0-1) for each evaluated mode; defaults to the fixture's min_top3 when present. Exit 1 below it; degraded modes are reported as not evaluated")
     args = ap.parse_args()
 
     if args.fail_on_baseline_regression and not args.baseline:
@@ -799,7 +799,7 @@ def main() -> int:
         section = {"state": "ok", "metrics": metrics, "results": results}
         if min_top3 is not None:
             pos_rows = [r for r in results if r["kind"] == "positive"]
-            observed = _hit_rate(pos_rows, 3) or 0.0
+            observed = _hit_rate(pos_rows, POSITIVE_GATE_TOP_K) or 0.0
             gate = {"metric": "positive_top3", "min": min_top3, "observed": round(observed, 4), "passed": observed >= min_top3, "source": min_top3_source}
             section["gate"] = gate
             print(f"gate [{mode}]: positive top-3 {fmt_rate(gate['observed'])} >= {fmt_rate(min_top3)} ({min_top3_source}) -> {'PASS' if gate['passed'] else 'FAIL'}")
