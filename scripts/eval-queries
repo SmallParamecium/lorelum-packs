@@ -38,6 +38,7 @@ if SCRIPT_DIR not in sys.path:
 
 from eval_queries_baseline import baseline_compatibility_errors, compare_baseline
 from eval_queries_candidate import project_pack_details
+from eval_queries_gates import GateFailure, limit_conflicts_with_formal_gates, resolve_run_policy
 from eval_queries_lore import run_lore as _run_lore_impl
 
 SCHEMA = "eval-queries-run/1"
@@ -617,9 +618,7 @@ def main() -> int:
         ap.error("--fail-on-baseline-regression requires --baseline")
     if args.limit is not None and args.limit <= 0:
         ap.error("--limit must be positive")
-    if args.limit is not None and (
-        args.require_coverage or args.require_frozen or args.fail_on_baseline_regression or args.min_top3 is not None
-    ):
+    if limit_conflicts_with_formal_gates(args):
         print("error: --limit is only valid for exploratory runs, not formal gates", file=sys.stderr)
         return 2
 
@@ -647,14 +646,9 @@ def main() -> int:
 
     requested = ["keyword", "semantic"] if args.mode == "both" else [args.mode]
     fetch_k = max(args.top_k + 2, 5)
-    if args.limit is not None:
-        min_top3, min_top3_source = None, "partial-run"
-    elif args.min_top3 is not None:
-        min_top3, min_top3_source = args.min_top3, "flag"
-    elif doc.get("min_top3") is not None:
-        min_top3, min_top3_source = float(doc["min_top3"]), "fixture"
-    else:
-        min_top3, min_top3_source = None, None
+    policy = resolve_run_policy(args, doc)
+    formal = policy.formal
+    min_top3, min_top3_source = policy.min_top3, policy.min_top3_source
 
     if args.store_root:
         os.makedirs(args.store_root, exist_ok=True)
@@ -672,9 +666,6 @@ def main() -> int:
     installed_ids = set(pack["practice_ids"])
     print(f"pack: {pack['name']}@{pack['version']} — {len(installed_ids)} practices ({source_kind})")
 
-    formal = args.limit is None and bool(
-        args.require_coverage or args.require_frozen or args.fail_on_baseline_regression or min_top3 is not None
-    )
     active_queries = _active_queries(doc)
     retired_queries = [q for q in doc["queries"] if q.get("status", "frozen") == "retired"]
     runnable, skipped = partition_queries(active_queries, installed_ids)
@@ -711,41 +702,34 @@ def main() -> int:
         "gate_failures": [],
     }
 
+    pre_failures: list[GateFailure] = []
     if formal:
         unfrozen = [q["id"] for q in active_queries if q.get("status") != "frozen"]
         if unfrozen:
-            run["gate_failures"].append({
-                "gate": "frozen-queries",
-                "message": f"{len(unfrozen)} active Query(s) are not frozen: {', '.join(unfrozen[:8])}",
-            })
+            pre_failures.append(GateFailure(
+                "frozen-queries",
+                f"{len(unfrozen)} active Query(s) are not frozen: {', '.join(unfrozen[:8])}",
+            ))
 
     migration_failures = validate_migration_coverage(doc, installed_ids)
     run["migration_validation"] = {"checked": True, "failures": migration_failures}
     if formal and migration_failures:
-        run["gate_failures"].append({
-            "gate": "migration-coverage",
-            "message": "; ".join(
+        pre_failures.append(GateFailure(
+            "migration-coverage",
+            "; ".join(
                 f"{failure.get('query', '(practice migration)')}: {failure['reason']}"
                 for failure in migration_failures
             ),
-        })
+        ))
 
-    missing_targets = list(skipped)
-    if formal and missing_targets:
-        run["gate_failures"].append({
-            "gate": "missing-query-target",
-            "message": "; ".join(f"{item['id']}: {item['reason']}" for item in missing_targets),
-        })
-
-    if formal and run["gate_failures"]:
-        write_artifacts(run, args)
-        return 1
+    if formal and skipped:
+        pre_failures.append(GateFailure(
+            "missing-query-target",
+            "; ".join(f"{item['id']}: {item['reason']}" for item in skipped),
+        ))
 
     if not runnable:
-        print("error: no runnable queries for this Pack", file=sys.stderr)
-        run["gate_failures"].append({"gate": "no-runnable-queries", "message": "no runnable queries for this Pack"})
-        write_artifacts(run, args)
-        return 1
+        pre_failures.append(GateFailure("no-runnable-queries", "no runnable queries for this Pack"))
 
     queried = {
         q["expect"]
@@ -758,34 +742,36 @@ def main() -> int:
         "practices_with_positive_queries": len(queried & installed_ids),
         "uncovered": uncovered,
     }
-    if uncovered:
+    if uncovered and args.require_coverage:
         listed = ", ".join(short(p) for p in uncovered)
-        if args.require_coverage:
-            print(f"error: coverage: {len(uncovered)} installed practice(s) have no positive queries: {listed}", file=sys.stderr)
-            print("error: add at least 1 positive query to the fixture in the Practice's change.", file=sys.stderr)
-            run["gate_failures"].append({"gate": "coverage", "message": f"{len(uncovered)} installed practice(s) have no positive queries: {listed}"})
-            write_artifacts(run, args)
-            return 1
-        print(f"warning: coverage: {len(uncovered)} installed practice(s) have no positive queries: {listed}")
+        pre_failures.append(GateFailure(
+            "coverage",
+            f"{len(uncovered)} installed practice(s) have no positive queries: {listed}",
+        ))
 
-    discipline = None
     if args.check_discipline:
         violations = discipline_violations(active_queries, pack.get("practices", []))
-        discipline = {"checked": True, "violations": len(violations)}
-        run["discipline"] = discipline
+        run["discipline"] = {"checked": True, "violations": len(violations)}
         if violations:
-            print(f"discipline: {len(violations)} query/practice restatement(s):")
-            for v in violations:
-                print(f"  - {v['query']} restates {short(v['practice'])} ({v['n']}-word run: \"{v['shared']}\")")
-            print("error: rewrite the flagged queries in situation wording; quotation matches prove nothing about retrieval.", file=sys.stderr)
             detail = "; ".join(
                 f"{v['query']} restates {short(v['practice'])} ({v['n']}-word run: \"{v['shared']}\")"
                 for v in violations
             )
-            run["gate_failures"].append({"gate": "discipline", "message": f"{len(violations)} query/practice restatement(s): {detail}"})
-            write_artifacts(run, args)
-            return 1
-        print("discipline: no query restates an installed Practice's title or applies_when text")
+            pre_failures.append(GateFailure(
+                "discipline",
+                f"{len(violations)} query/practice restatement(s): {detail}",
+            ))
+        else:
+            print("discipline: no query restates an installed Practice's title or applies_when text")
+
+    if pre_failures:
+        for failure in pre_failures:
+            print(f"error: {failure.gate}: {failure.message}", file=sys.stderr)
+            run["gate_failures"].append({"gate": failure.gate, "message": failure.message})
+        write_artifacts(run, args)
+        return 1
+
+    print("discipline: no query restates an installed Practice's title or applies_when text") if args.check_discipline else None
     modes_section = {}
     for mode in requested:
         if mode == "semantic":
@@ -824,6 +810,7 @@ def main() -> int:
 
     run["modes"] = modes_section
 
+    post_failures: list[GateFailure] = []
     if args.baseline:
         try:
             with open(args.baseline, encoding="utf-8") as fh:
@@ -834,12 +821,12 @@ def main() -> int:
             if compatibility_errors:
                 message = "; ".join(compatibility_errors)
                 if args.fail_on_baseline_regression:
-                    run["gate_failures"].append({"gate": "baseline-schema", "message": message})
+                    post_failures.append(GateFailure("baseline-schema", message))
                 else:
                     print(f"warning: baseline comparison skipped: {message}", file=sys.stderr)
             else:
                 for mode, section in modes_section.items():
-                    if section["state"] != "ok":
+                    if section.get("state") != "ok":
                         continue
                     base_mode = baseline["modes"][mode]
                     fixture_queries = {q["id"]: q for q in doc["queries"]}
@@ -848,62 +835,54 @@ def main() -> int:
                     )
                     reg = section["regression"]
                     print(f"baseline [{mode}]: {reg['common_queries']} common, {len(reg['regressions'])} lost, {len(reg['improvements'])} gained")
-                    if args.fail_on_baseline_regression and reg["regressions"]:
-                        for row in reg["regressions"]:
-                            print(f"error: baseline regression [{mode}]: {row['id']} lost a hit (baseline rank {row['baseline_rank']}; now {row['now']})", file=sys.stderr)
-                            run["gate_failures"].append({"gate": "baseline-regression", "message": f"[{mode}] {row['id']} lost a hit (baseline rank {row['baseline_rank']}; now {row['now']})"})
-                    if args.fail_on_baseline_regression and reg["migration_failures"]:
-                        for row in reg["migration_failures"]:
-                            run["gate_failures"].append({
-                                "gate": "migration-regression",
-                                "message": f"[{mode}] migrated Query {row['id']} does not hit new target {row['expect']}",
-                            })
-                    if args.fail_on_baseline_regression and reg["expect_mismatches"]:
-                        for row in reg["expect_mismatches"]:
-                            run["gate_failures"].append({
-                                "gate": "baseline-query-mismatch",
-                                "message": f"[{mode}] {row['id']}: {row['reason']}",
-                            })
-                    if args.fail_on_baseline_regression and reg["unaccounted_baseline_queries"]:
-                        run["gate_failures"].append({
-                            "gate": "baseline-query-removal",
-                            "message": f"[{mode}] baseline contains unaccounted Query(s): {', '.join(reg['unaccounted_baseline_queries'])}",
-                        })
-                    if args.fail_on_baseline_regression and reg["baseline_schema_errors"]:
-                        details = "; ".join(
-                            f"{row['id']} missing {', '.join(row['missing'])}"
-                            for row in reg["baseline_schema_errors"]
-                        )
-                        run["gate_failures"].append({
-                            "gate": "baseline-schema",
-                            "message": f"[{mode}] invalid baseline result schema: {details}",
-                        })
+                    if not args.fail_on_baseline_regression:
+                        continue
+                    for row in reg["regressions"]:
+                        message = f"[{mode}] {row['id']} lost a hit (baseline rank {row['baseline_rank']}; now {row['now']})"
+                        post_failures.append(GateFailure("baseline-regression", message))
+                    for row in reg["migration_failures"]:
+                        post_failures.append(GateFailure(
+                            "migration-regression",
+                            f"[{mode}] migrated Query {row['id']} does not hit new target {row['expect']}",
+                        ))
+                    for row in reg["expect_mismatches"]:
+                        post_failures.append(GateFailure(
+                            "baseline-query-mismatch",
+                            f"[{mode}] {row['id']}: {row['reason']}",
+                        ))
+                    if reg["unaccounted_baseline_queries"]:
+                        post_failures.append(GateFailure(
+                            "baseline-query-removal",
+                            f"[{mode}] baseline contains unaccounted Query(s): {', '.join(reg['unaccounted_baseline_queries'])}",
+                        ))
         except (OSError, json.JSONDecodeError) as exc:
             if args.fail_on_baseline_regression:
-                print(f"error: could not read baseline {args.baseline}: {exc}", file=sys.stderr)
-                run["gate_failures"].append({"gate": "baseline-read", "message": f"could not read baseline {args.baseline}: {exc}"})
+                message = f"could not read baseline {args.baseline}: {exc}"
+                post_failures.append(GateFailure("baseline-read", message))
             else:
                 print(f"warning: could not read baseline {args.baseline}: {exc}", file=sys.stderr)
 
     if all(s["state"] == "degraded" for s in modes_section.values()):
-        print("error: every requested mode degraded; no evaluation ran", file=sys.stderr)
-        run["gate_failures"].append({"gate": "all-degraded", "message": "every requested mode degraded; no evaluation ran"})
-    failed_gates = [(m, s["gate"]) for m, s in modes_section.items() if s.get("gate") and not s["gate"]["passed"]]
-    if failed_gates:
-        for mode, gate in failed_gates:
-            print(f"error: gate FAILED [{mode}]: positive top-3 {fmt_rate(gate['observed'])} below minimum {fmt_rate(gate['min'])}", file=sys.stderr)
-            run["gate_failures"].append({"gate": "min-top3", "message": f"[{mode}] positive top-3 {fmt_rate(gate['observed'])} below minimum {fmt_rate(gate['min'])}"})
+        post_failures.append(GateFailure("all-degraded", "every requested mode degraded; no evaluation ran"))
 
-    if formal:
-        for mode, section in modes_section.items():
-            if section.get("state") != "ok":
-                continue
+    for mode, section in modes_section.items():
+        gate = section.get("gate")
+        if gate and not gate["passed"]:
+            post_failures.append(GateFailure(
+                "min-top3",
+                f"[{mode}] positive top-3 {fmt_rate(gate['observed'])} below minimum {fmt_rate(gate['min'])}",
+            ))
+        if formal and section.get("state") == "ok":
             errors = [r["id"] for r in section.get("results", []) if r.get("error")]
             if errors:
-                run["gate_failures"].append({
-                    "gate": "query-errors",
-                    "message": f"[{mode}] {len(errors)} Query execution error(s): {', '.join(errors[:8])}",
-                })
+                post_failures.append(GateFailure(
+                    "query-errors",
+                    f"[{mode}] {len(errors)} Query execution error(s): {', '.join(errors[:8])}",
+                ))
+
+    for failure in post_failures:
+        print(f"error: {failure.gate}: {failure.message}", file=sys.stderr)
+        run["gate_failures"].append({"gate": failure.gate, "message": failure.message})
 
     write_artifacts(run, args)
     return 1 if run["gate_failures"] else 0
